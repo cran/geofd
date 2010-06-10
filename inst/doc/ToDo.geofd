@@ -1,0 +1,11 @@
+Things to be done and/or checked in the package geoR
+=====================================================
+
+ * Mute geoR messages when, options(geoR.messages = FALSE) doesn=t work
+ * Integrate messages (includes warning messages) into te output buffer.
+ * Implement unit test at least for each function.
+ * Improve the library design creating one based on workflows, like in gstat.
+ * Define a set of classess for the output objects in order to be used by other functions and allow interoperability.
+ * Create exhaustive rules for validating arguments on each function.
+ * In okfd.cv define better estimation rules.
+ * Other defined inside the code as "ToDo: ..."

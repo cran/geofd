@@ -1,0 +1,9 @@
+# use glob syntax.
+syntax: glob
+
+# Ignoring all temporary files
+*~
+
+# Ignoring all report files from unit testing
+inst/unitTests/report*
+
