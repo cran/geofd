@@ -13,13 +13,13 @@ Prediction for function value spatial data using kriging based methods
 \tabular{ll}{
 Package: \tab geofd\cr
 Type: \tab Package\cr
-Version: \tab 0.4.3\cr
+Version: \tab 0.4.6\cr
 LazyLoad: \tab yes\cr
 LazyData: \tab yes\cr
 License: \tab GPL-2\cr
-Date: \tab 2010-04-22\cr
-Depends: \tab R (>= 2.10.0), fda, geoR\cr
-Built: \tab R 2.11.0; ; 2010-05-06 08:05:13 UTC; unix\cr
+Date: \tab 2010-06-16\cr
+Depends: \tab R (>= 2.10.0), fda, geoR, tkrplot\cr
+Built: \tab R 2.11.1; ; 2010-08-09 17:22:47 UTC; unix\cr
 }
 
 Index:
@@ -35,16 +35,14 @@ okfd                    Function for doing Ordinary Kriging for
 okfd.cv                 Function for doing Cross-Validation analysis
                         for Ordinary Kriging for function-value data
 plot.geofd              Plot Trace Variogram and adjusted models
-variofit.okfd           Variogram Estimation
-variog.okfd             Empirical Variograms for function-value data
+fit.tracevariog         Variogram Estimation
+trace.variog            Empirical Variograms for function-value data
 }
-~~ An overview of how to use the package, including the most important ~~
-~~ functions ~~
 }
 \author{
-  Ramon Giraldo <rgiraldoh@unal.edu.co>, Pedro Delicado <pedro.delicado@upc.edu>, Jorge Mateu <mateu@mat.uji.es>
+Ramon Giraldo <rgiraldoh@unal.edu.co>, Pedro Delicado <pedro.delicado@upc.edu>, Jorge Mateu <mateu@mat.uji.es>
 
-  Maintainer: Andres Perez <afperesm@unal.edu.co>
+Maintainer: Andres Perez <afperesm@unal.edu.co>
 }
 \references{
   Giraldo, R. (2009) \emph{Geostatistical Analysis of Functional Data.} Ph.D. thesis. Universitat Politècnica de Catalunya.

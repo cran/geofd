@@ -13,46 +13,9 @@
 #     If an vector is passed to the argument ‘breaks’ its elements are
 #     taken as the limits of the bins (classes of distance) and the
 #     argument ‘uvec’ is ignored.
-".old.variog.okfd"<-function(coords, L2norm){
-
-  # Argument validation
-  if(is.null(coords)) stop("coords is not an optional parameter")
-  if(ncol(coords)!=2) stop("coords must be an n x 2 matrix")
-  if(!isSymmetric(L2norm)) stop("L2norm must be a symmetric matrix")
-  if(sum(diag(L2norm))!=0) stop("each element of the diagonal of L2norm must zero")
-
-  # Euclidian distance among sites
-  Eu.d <- as.matrix(dist(coords, method="euclidean"))
-
-  u <- array(as.dist(Eu.d))
-
-  # Los valores del variograma son las mismas diferencias punto a punto
-  # entre todas las curvas. La extracción de esta información se hace
-  # quitando la parte superior de la matriz L2norm incluyendo la diagonal
-  # y pasando secuencialmente a un arreglo los valores restantes
-  v <- array(as.dist(L2norm))
-  max.dist <- max(array(as.dist(Eu.d)))
-
-  # Se crea el objeto trace-variogram a retornar
-  # ToDo: Se está retornando los objetos 'Eu.d' y 'L2norm' que son formas aumentadas de los objetos 'u' y 'v' cuando el tipo de variograma es cloud
-  # El objeto Eu.d luego es utilizado para calcular el rango del semivariograma
-  # Eu.d y L2norm pueden ser obtenidos de u y v haciendo un ciclo que itere sobre todos los valores:
-  # [a, b, c]
-  # y cree una matrix de la forma:
-  # 0 a b
-  # a 0 c
-  # b c 0
-  emp.trace.vari <- list( u=u, v=v, output.type="cloud", max.dist=max.dist, Eu.d=Eu.d, L2norm=L2norm)
-
-  # Se asigna la clase variogram al objeto de retorno para que luego
-  # pueda ser utilizado desde 
-  class(emp.trace.vari) <- "variogram"
-
-  return(emp.trace.vari)
-}
 
 # nugget.tolerance, uvec y breaks son solo para bin variogram
-"variog.okfd"<-function(coords, L2norm, bin=FALSE, max.dist, uvec="default", breaks="default", nugget.tolerance){
+"trace.variog"<-function(coords, L2norm, bin=FALSE, max.dist, uvec="default", breaks="default", nugget.tolerance){
 
   # Argument validation
   if(is.null(coords)) stop("coords is not an optional parameter")
@@ -156,5 +119,50 @@
   class(emp.trace.vari) <- "variogram"
 
   return(emp.trace.vari)
+}
+
+".create.fd.object"<-function(data, smooth.type, argvals, nbasis, lambda){
+
+  if(smooth.type == "fourier"){
+    n <- dim(data)[1]
+  }
+
+  s <- dim(data)[2] # number of sites
+
+##################################################################
+#  Creating a fd object
+##################################################################
+
+  rangeval <- range(argvals)
+
+  if(smooth.type == "fourier"){
+
+    period <- n
+    basis <- create.fourier.basis(rangeval, nbasis, period)
+    datafd <- Data2fd(argvals=argvals, y=data, basisobj=basis, lambda=lambda)
+
+  }else{
+    # 4 define un spline cubico
+    norder <- 4
+    basis <- create.bspline.basis(rangeval, nbasis, norder)
+
+    datafdPar <- fdPar(basis, Lfdobj=2, lambda)
+    smooth.datafd <- smooth.basis(argvals, data, datafdPar)
+    datafd <- smooth.datafd$fd   
+  }
+
+##################################################################
+# Calculating L2 norm among functions
+# Integral del cuadrado de las diferencias entre las funciones
+##################################################################
+
+  if(smooth.type == "fourier"){
+    M <- fourierpen(basis,Lfdobj=0)
+  }else{
+    M <- bsplinepen(basis,Lfdobj=0)
+  }
+
+  return( list(M=M, datafd=datafd) )
+
 }
 

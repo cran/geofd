@@ -1,7 +1,7 @@
 \encoding{utf8}
-\name{variofit.okfd}
-\alias{variofit.okfd}
-\alias{geofd.variofit.okfd}
+\name{fit.tracevariog}
+\alias{fit.tracevariog}
+\alias{geofd.fit.tracevariog}
 \title{
   Variogram Estimation
 }
@@ -9,15 +9,17 @@
   Fits a parametric model to a empirical variogram and estimates covariance parameters. Aditionally all fitted variogram models are plotted for verification purpose.
 }
 \usage{
-variofit.okfd(emp.trace.vari, models, sigma2.0, phi.0, fix.nugget, nugget,
-            fix.kappa, kappa, max.dist.variogram)
+fit.tracevariog(emp.trace.vari, models, sigma2.0, phi.0,
+                fix.nugget=FALSE, nugget=0,
+                fix.kappa=TRUE, kappa=0.5,
+                max.dist.variogram=NULL)
 }
 \arguments{
   \item{emp.trace.vari}{
     empirical trace-variogram. An object returned from the \code{\link{variog}} function.
 }
   \item{models}{
-    vector of correlation functions against which empirical trace variogram will be fitted.
+    a character vector of correlation function names used in geoR against which empirical trace variogram will be fitted.
 }
   \item{sigma2.0}{
     initial value for the covariance parameter \eqn{\sigma^2}{sigma^2} (partial sill). For further details see documentation for the parameter \code{ini.cov.pars} from the \code{\link{variofit}} function.
@@ -42,7 +44,14 @@ variofit.okfd(emp.trace.vari, models, sigma2.0, phi.0, fix.nugget, nugget,
 }
 }
 \details{
-  This function makes exhaustive use of the \code{\link{variofit}} function.
+  This function makes use of the \code{\link{variofit}} function.
+
+  \bold{Variogram models an parameters}
+
+  When the \code{cov.model} parameter is \code{NULL} a function determines the optimal model between spherical, exponential gaussian and matern using the received parameters. The arguments \code{sigma2.0} and \code{phi.0} are used as initial values for fitting each variogram model.
+
+  The parameters \code{fix.nugget}, \code{nugget}, \code{fix.kappa}, \code{kappa} and \code{max.dist.variogram} are the same for each variogram model specified in \code{models}.
+
 }
 \value{
   A list with the following components:

@@ -7,3 +7,5 @@ syntax: glob
 # Ignoring all report files from unit testing
 inst/unitTests/report*
 
+# Ignoring all Mercurial revert files
+*.orig

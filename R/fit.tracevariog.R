@@ -1,7 +1,12 @@
-"variofit.okfd"<-function(emp.trace.vari, models, sigma2.0, phi.0, fix.nugget,
-                        nugget, fix.kappa, kappa, max.dist.variogram){
+"fit.tracevariog"<-function(emp.trace.vari, models, sigma2.0, phi.0, fix.nugget=FALSE, nugget=0, fix.kappa=TRUE, kappa=0.5, max.dist.variogram=NULL){
 
   # Argument validation
+  if(missing(models) || is.null(models)){
+    models <- c("spherical","exponential","gaussian","matern")
+  }
+  if(missing(max.dist.variogram) || is.null(max.dist.variogram)){
+    max.dist.variogram <- max(emp.trace.vari$u)
+  }
   if(!identical(class(emp.trace.vari),"variogram")) stop("the parameter emp.trace.vari must be of class variogram")
   if(!identical(dim(colors),dim(models))) stop("dimensions of parameters colors and models must be identical")
   if(!is.numeric(sigma2.0)) stop("the partial sill paramter must be a number")
@@ -16,13 +21,11 @@
   trace.vari <- c(NULL)
   trace.vari["value"] <- Inf
   # Is created an array where the variofit results will be pushed
-  trace.vari.array = c()
+  trace.vari.array <- c()
   # A loop is made in order to prove each model and choose the best using as criterion the variofit minimised sum of squares
   for(cont in c(1:length(models))){
     # The variofit function is called
-    trace.vari.tmp <- variofit(emp.trace.vari, ini.cov.pars=c(sigma2.0,phi.0), max.dist=max.dist.variogram,
-    fix.nugget=fix.nugget, nugget=nugget, fix.kappa=fix.kappa, kappa=kappa,
-    cov.model=models[cont], messages=FALSE)
+    trace.vari.tmp <- variofit(emp.trace.vari, ini.cov.pars=c(sigma2.0,phi.0), max.dist=max.dist.variogram, fix.nugget=fix.nugget, nugget=nugget, fix.kappa=fix.kappa, kappa=kappa, cov.model=models[cont], messages=FALSE)
     # Each calculated trace variogram is pushed inside trace.vari.array
     trace.vari.array[[length(trace.vari.array)+1]] <- trace.vari.tmp
     # The last caculated variofit is compared against the last optimal variofit

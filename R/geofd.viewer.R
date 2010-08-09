@@ -1,4 +1,4 @@
-".geofd.viewer"<-function(okfd.res){
+".geofd.viewer"<-function(okfd.res, argnames=c("argument", "sites", "values")){
 
   # Loading required libraries
   require(tkrplot)
@@ -33,7 +33,7 @@
   {
     params <- par(bg="white")
     if(index>0){
-    plot(okfd.res[["argvals"]], okfd.res[["krig.new.data"]][,index], col=1, lwd=1, type="l", lty=1, main="Predictions", xlab="argnames", ylab="variable", ylim=ylim )
+    plot(okfd.res[["argvals"]], okfd.res[["krig.new.data"]][,index], col=1, lwd=1, type="l", lty=1, main=argnames[1], xlab=argnames[2], ylab=argnames[3], ylim=ylim )
     }
   }
 

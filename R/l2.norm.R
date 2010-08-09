@@ -1,3 +1,4 @@
+# Integral del cuadrado de las diferencias entre las funciones
 "l2.norm" <- function(s, datafd, M)
 {
 

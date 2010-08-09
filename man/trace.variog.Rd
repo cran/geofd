@@ -1,7 +1,7 @@
 \encoding{utf8}
-\name{variog.okfd}
-\alias{variog.okfd}
-\alias{geofd.variog.okfd}
+\name{trace.variog}
+\alias{trace.variog}
+\alias{geofd.trace.variog}
 \title{
   Empirical Variograms for function-value data
 }
@@ -9,7 +9,8 @@
   Computes empirical trace-variograms using the L2 norm matrix for the semivariance values. Output a variogram cloud.
 }
 \usage{
-  variog.okfd(coords, L2norm, bin=FALSE, max.dist, uvec="default", breaks="default", nugget.tolerance)
+  trace.variog(coords, L2norm, bin=FALSE, max.dist, uvec="default",
+              breaks="default", nugget.tolerance)
 }
 \arguments{
   \item{coords}{an s x 2 matrix containing the coordinates of the n sites where functional data are observed.}
@@ -48,16 +49,19 @@
 }
 \examples{
 
+# First example: creating a binned variogram
 # okfd first example
 data(maritimes)
 coord.cero <- matrix(c(-64.06, 45.79),nrow=1,ncol=2)
 n<-dim(maritimes.data)[1]
 argvals<-seq(1,n, by=1)
-okfd.res<-okfd(new.coords=coord.cero, coords=maritimes.coords, data=maritimes.data,
-              nbasis=65, argvals=argvals, fix.nugget=TRUE, kappa=0.7)
+okfd.res<-okfd(new.coords=coord.cero, coords=maritimes.coords,
+              data=maritimes.data, nbasis=65, argvals=argvals, fix.nugget=TRUE,
+              kappa=0.7)
 
 # Calculating the empiricial trace bin variogram
-new.emp.trace.vari <- variog.okfd(coords=okfd.res$coords, L2norm=okfd.res$emp.trace.vari$L2norm, bin=TRUE)
+new.emp.trace.vari <- trace.variog(coords=okfd.res$coords,
+                      L2norm=okfd.res$emp.trace.vari$L2norm, bin=TRUE)
 
 # The empirical trace cloud variogram is replaced with the trace bin variogram
 okfd.res$emp.trace.vari <- new.emp.trace.vari

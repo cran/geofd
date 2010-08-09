@@ -5,14 +5,14 @@
 # array.nbasis=max(50,dim(data)[1]), array.lambda = 0,
 # max.dist.variogram=NULL, nugget.fix=NULL
 
-okfd.cv <- function(coords, data, argnames=c("argument", "sites", "values"),
-    smooth.type=NULL, array.nbasis=max(50,dim(data)[1]), argvals=seq(0,1,len=dim(data)[1]), array.lambda=0,
-    cov.model=NULL, fix.nugget=FALSE, nugget=0, fix.kappa=TRUE, kappa=0.5, max.dist.variogram=NULL)
+okfd.cv <- function(coords, data, argnames=c("argument", "sites", "values"), one.model=TRUE, smooth.type=NULL, array.nbasis=max(50,dim(data)[1]), argvals=seq(0,1,len=dim(data)[1]), array.lambda=0, cov.model=NULL, fix.nugget=FALSE, nugget=0, fix.kappa=TRUE, kappa=0.5, max.dist.variogram=NULL)
 {
   # Argument validation
+  smooth.type <- match.arg(smooth.type, c("bsplines","fourier"))
   if(!is.vector(array.nbasis)) stop("the argument \"array.nbasis\" must be a vector")
   if(!is.vector(array.lambda)) stop("the argument \"array.lambda\" must be a vector")
-  if(!is.vector(argnames) || length(argnames)!=3) stop("argnames must be a character vector of length 3")
+  if(!is.vector(argnames) || length(argnames)!=3) stop("the argument \"argnames\" must be a character vector of length 3")
+  if(!is.logical(one.model)) stop("the argument \"one.model\" must be logical, i.e. TRUE or FALSE")
 
   # Init local variables 
   m <- dim(data)[1]
@@ -25,20 +25,33 @@ okfd.cv <- function(coords, data, argnames=c("argument", "sites", "values"),
   k <- 0
   k.opt <- 1
   l.opt <- 1
+  fdmodels <- c()
 
   # Loop over all number of basis functions parameters
-  for (nbasis.k in array.nbasis){
+  for (nbasis in array.nbasis){
     k <- k+1
     l <- 0
     # Loop over all smoothing penalization parameters
-    for (lambda.l in array.lambda){
+    for (lambda in array.lambda){
       l <- l+1
+      # Option 1, one model is estimated using all sites
+      if(one.model==TRUE){
+        fdmodel <- .simple.fdmodel(new.coords, coords, data, smooth.type, nbasis, argvals, lambda, cov.model, fix.nugget, nugget, fix.kappa, kappa, max.dist.variogram)
+        fdmodels[[length(fdmodels)+1]] <- fdmodel
+      }
       # Loop over all sites number
       for (i in 1:s){
-        # Prediction for the first 'i' sites using the last 's-i'
-        res.okfd <- okfd( new.coords=as.data.frame(coords)[i,], coords=as.data.frame(coords)[-i,], data=data[,-i],
-                          smooth.type=smooth.type, nbasis=nbasis.k, argvals=argvals, lambda=lambda.l,
-                          cov.model=cov.model, fix.nugget=fix.nugget, nugget=nugget, fix.kappa=fix.kappa, kappa=kappa, max.dist.variogram=max.dist.variogram)
+        # Option 2, one model is estimated using 's-i' sites
+        if(one.model==FALSE){
+          new.coords <- as.data.frame(coords)[i,]
+          coords <- as.data.frame(coords)[-i,]
+          data <- data[,-i]
+          fdmodel <- .simple.fdmodel(new.coords, coords, data, smooth.type, nbasis, argvals, lambda, cov.model, fix.nugget, nugget, fix.kappa, kappa, max.dist.variogram)
+          fdmodels[[length(fdmodels)+1]] <- fdmodel
+        }
+        # Prediction for the site 'i' using the other 's-i' sites,
+        # the model and smoothed data specified by fdmodel
+        res.okfd <- .okfd.predict(argvals=argvals, datafd=fdmodel$fdobjects$datafd, coords=coords, new.coords=as.data.frame(coords)[i,], trace.vari=fdmodel$trace.vari.objects$best, Eu.d=fdmodel$emp.trace.vari$Eu.d)
         # Predicted data is saved 
         krig.cv[k,l,i,] <- res.okfd$krig.new.data
         # An error measure is calculated
@@ -60,7 +73,8 @@ okfd.cv <- function(coords, data, argnames=c("argument", "sites", "values"),
     l.opt= l.opt,
     krig.cv= krig.cv,
     mse.cv= mse.cv,
-    mse.cv.opt= mse.cv.opt
+    mse.cv.opt= mse.cv.opt,
+    fdmodels=fdmodels
   ))
 
 }

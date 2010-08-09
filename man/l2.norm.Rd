@@ -23,15 +23,18 @@
   }
 }
 \details{
-  In the details section of the \code{\link{okfd}} function can be reviewed the details of the paremeters used when calling this function.
-
-  \bold{Functional data object}
-
-  This is an object of the class \code{\link{fd}} it can be created using some functions like \code{\link{Data2fd}} or \code{\link{smooth.basis}}, take in count if a penalization parameter is going to be used.
 
   \bold{Roughness penalty matrix}
 
   This matrix is the output of one of the following functions: \code{\link{fourierpen}} y \code{\link{bsplinepen}}. The used function depends upon the smoothing type which is going to be applied.
+
+  When the roughness penalty matrix is being calculated, the following considerations are taked in count:
+  \itemize{
+  \item The differential operator passed as parameter for both \code{fourierpen} and \code{bsplinepen} is always zero.
+  \item When the selected smooth method is bsplines, the basis object passed to \code{\link{bsplinepen}} is the output of the function \code{\link{create.bspline.basis}} using 
+\code{argvals} as the \code{rangeval} parameter, \code{nbasis} as the number of basis functions parameter and the default order of b-splines, which is four, a cubic spline, as the \code{norder} parameter.
+  \item When the selected smooth method is fourier, the basis object is the output of the function \code{fourierpen}. The parameters \code{rangeval} and \code{nbasis} are the same as for \code{\link{create.bspline.basis}}, and the \code{period} parameter as the number of observations on each curve.
+  }
 
 }
 \value{
@@ -44,6 +47,6 @@
   }
 }
 \seealso{
-\code{\link{okfd}} for doing ordinary kriging for function-value data, \code{\link{variog.okfd}} for functional empirical trace variogram calculation, \code{\link{variofit.okfd}} for fitting a variogram model in the funcional scenario.
+\code{\link{okfd}} for doing ordinary kriging for function-value data, \code{\link{trace.variog}} for functional empirical trace variogram calculation, \code{\link{fit.tracevariog}} for fitting a variogram model in the funcional scenario.
 }
 \keyword{math}

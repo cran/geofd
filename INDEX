@@ -9,5 +9,5 @@ okfd                    Function for doing Ordinary Kriging for
 okfd.cv                 Function for doing Cross-Validation analysis
                         for Ordinary Kriging for function-value data
 plot.geofd              Plot Trace Variogram and adjusted models
-variofit.okfd           Variogram Estimation
-variog.okfd             Empirical Variograms for function-value data
+fit.tracevariog         Variogram Estimation
+trace.variog            Empirical Variograms for function-value data
