@@ -71,13 +71,6 @@ okfd.cv(coords, data, argnames=c("argument", "sites", "values"),
   \item
     If it is \code{FALSE}, then for each site a model and smoothed data are created and used on each iteration.
   }
-%% Opción 1:
-%% * Estimar modelo y parámetros con TODOS los datos.
-%% * Utilizar ese modelo ajustado para hacer validación cruzada.
-%% 
-%% Opción 2:
-%% * Para cada conjunto de 34 puntos estimar MODELO y PARAMETROS
-%% * Con cada modelo ajustado hacer validación cruzada.
 }
 \value{
   A list with the following components:
@@ -89,32 +82,16 @@ okfd.cv(coords, data, argnames=c("argument", "sites", "values"),
   \item{fd.models}{unreviewed}
 }
 \references{
-  Giraldo, R. (2009) \emph{Geostatistical Analysis of Functional Data.} Ph.D. thesis. Universitat Politècnica de Catalunya.
+Giraldo, R. (2009) \emph{Geostatistical Analysis of Functional Data.} Ph.D. thesis. Universitat Politecnica de Catalunya.
+
+Giraldo, R., Delicado, P. and Mateu, J. (2012) \emph{\pkg{geofd}: An R package for function-valued geostatistical prediction}. 
+Revista Colombiana de Estadistica. 35, 385-407.
 }
 \author{
   Ramon Giraldo \email{rgiraldoh@unal.edu.co}, \cr
   Pedro Delicado \email{pedro.delicado@upc.edu}, \cr
   Jorge Mateu \email{mateu@mat.uji.es}.
 }
-%\note{
-%%  ~~further notes~~
-%}
-
-%% ~Make other sections like Warning with \section{Warning }{....} ~
-
-%\seealso{
-%% ~~objects to See Also as \code{\link{help}}, ~~~
-%}
-%\examples{
-%##---- Should be DIRECTLY executable !! ----
-%##-- ==>  Define data, use random,
-%##--	or do  help(data=index)  for the standard data sets.
-
-%## The function is currently defined as
-
-%}
-% Add one or more standard keywords, see file 'KEYWORDS' in the
-% R documentation directory.
 \keyword{spatial}
 \keyword{datagen}
 \keyword{smooth}

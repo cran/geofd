@@ -46,7 +46,7 @@ fit.tracevariog(emp.trace.vari, models, sigma2.0, phi.0,
 \details{
   This function makes use of the \code{\link{variofit}} function.
 
-  \bold{Variogram models an parameters}
+  \bold{Variogram models and parameters}
 
   When the \code{cov.model} parameter is \code{NULL} a function determines the optimal model between spherical, exponential gaussian and matern using the received parameters. The arguments \code{sigma2.0} and \code{phi.0} are used as initial values for fitting each variogram model.
 
@@ -59,7 +59,10 @@ fit.tracevariog(emp.trace.vari, models, sigma2.0, phi.0,
   \item{trace.vari.array}{vector of all fitted theoretical variogram models}
 }
 \references{
-  Giraldo, R. (2009) \emph{Geostatistical Analysis of Functional Data.} Ph.D. thesis. Universitat Politècnica de Catalunya.
+Giraldo, R. (2009) \emph{Geostatistical Analysis of Functional Data.} Ph.D. thesis. Universitat Politecnica de Catalunya.
+
+Giraldo, R., Delicado, P. and Mateu, J. (2012) \emph{\pkg{geofd}: An R package for function-valued geostatistical prediction}. 
+Revista Colombiana de Estadistica. 35, 385-407.
 }
 \author{
   Ramon Giraldo \email{rgiraldoh@unal.edu.co}, \cr

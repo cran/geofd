@@ -1,11 +1,5 @@
-# Cross-Validation analysis for ordinary kriging for function value-data.
-
-# coords, data, argvals=seq(0,1,len=dim(data)[1]),
-# argnames=c("argument", "sites", "values"),
-# array.nbasis=max(50,dim(data)[1]), array.lambda = 0,
-# max.dist.variogram=NULL, nugget.fix=NULL
-
-okfd.cv <- function(coords, data, argnames=c("argument", "sites", "values"), one.model=TRUE, smooth.type=NULL, array.nbasis=max(50,dim(data)[1]), argvals=seq(0,1,len=dim(data)[1]), array.lambda=0, cov.model=NULL, fix.nugget=FALSE, nugget=0, fix.kappa=TRUE, kappa=0.5, max.dist.variogram=NULL)
+okfd.cv <-
+function(coords, data, argnames=c("argument", "sites", "values"), one.model=TRUE, smooth.type=NULL, array.nbasis=max(50,dim(data)[1]), argvals=seq(0,1,len=dim(data)[1]), array.lambda=0, cov.model=NULL, fix.nugget=FALSE, nugget=0, fix.kappa=TRUE, kappa=0.5, max.dist.variogram=NULL)
 {
   # Argument validation
   smooth.type <- match.arg(smooth.type, c("bsplines","fourier"))
@@ -78,4 +72,3 @@ okfd.cv <- function(coords, data, argnames=c("argument", "sites", "values"), one
   ))
 
 }
-

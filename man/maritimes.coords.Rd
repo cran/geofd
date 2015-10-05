@@ -1,3 +1,4 @@
+\encoding{utf8}
 \name{maritimes.coords}
 \alias{maritimes.coords}
 \alias{geofd.maritimes.coords}
@@ -6,7 +7,7 @@
 \description{
   The geographical coordinates in decimal degrees of 35 weather stations.
 }
-\usage{data(maritimes)}
+\usage{data(maritimes.coords)}
 \format{
  A matrix with the coordinates of 35 weather stations.
 }

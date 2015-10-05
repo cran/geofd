@@ -1,0 +1,15 @@
+import(fda, geoR)
+
+importFrom(grDevices, colors, rainbow)
+importFrom(graphics, "lines", "plot")
+importFrom(stats, as.dist, dist, quantile, var)
+
+
+export(fit.tracevariog)
+export(l2.norm)
+export(okfd)
+export(okfd.cv)
+export(plot.geofd)
+export(trace.variog)
+
+S3method(plot,geofd)

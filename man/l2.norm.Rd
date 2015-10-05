@@ -1,3 +1,4 @@
+\encoding{utf8}
 \name{l2.norm}
 \alias{l2.norm}
 \alias{geofd.l2.norm}
@@ -47,6 +48,6 @@
   }
 }
 \seealso{
-\code{\link{okfd}} for doing ordinary kriging for function-value data, \code{\link{trace.variog}} for functional empirical trace variogram calculation, \code{\link{fit.tracevariog}} for fitting a variogram model in the funcional scenario.
+\code{\link{okfd}} for doing Ordinary Kriging for function-value data, \code{\link{trace.variog}} for functional empirical trace variogram calculation, \code{\link{fit.tracevariog}} for fitting a variogram model in the functional scenario.
 }
 \keyword{math}

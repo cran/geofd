@@ -6,7 +6,7 @@
   Function for doing Ordinary Kriging for function-value Data
 }
 \description{
-  This function allows to carry out prediction by ordinary kriging for function-value data by considering a Fourier or B-splines basis for smoothing the observed data set
+  This function allows to carry out prediction by Ordinary Kriging for function-value data by considering a Fourier or B-splines basis for smoothing the observed data set
 }
 \usage{
 okfd(new.coords, coords, data, smooth.type=NULL, nbasis=max(50,dim(data)[1]),
@@ -16,7 +16,7 @@ okfd(new.coords, coords, data, smooth.type=NULL, nbasis=max(50,dim(data)[1]),
 }
 \arguments{
   \item{new.coords}{
-    an n x 2 matrix containing the coordinates of the new n sites where functional kriging has to be done
+    an n x 2 matrix containing the coordinates of the new n sites where functional Kriging has to be done
   }
   \item{coords}{
     an s x 2 matrix containing the coordinates of the n sites where functional data are observed
@@ -57,7 +57,7 @@ okfd(new.coords, coords, data, smooth.type=NULL, nbasis=max(50,dim(data)[1]),
 }
 \details{
 
-  This function is a common sequence of the proposed process for doing ordinary kriging in the functional scenario, covers from the preparation of the original data and variogram estimation, unto data prediction.
+  This function is a common sequence of the proposed process for doing Ordinary Kriging in the functional scenario, covers from the preparation of the original data and variogram estimation, unto data prediction.
 
   \bold{Functional data object}
 
@@ -89,18 +89,21 @@ okfd(new.coords, coords, data, smooth.type=NULL, nbasis=max(50,dim(data)[1]),
   \item{argvals}{a vector of argument values corresponding to the observations in matrix data}
   \item{nbasis}{a numeric value defining the number of basis functions used to smooth the discrete data set recorded at each site.}
   \item{lambda}{penalization parameter for smoothing the observed functions.}
-  \item{new.coords}{matrix containing the coordinates of the new sites where functional kriging has to be done.}
+  \item{new.coords}{matrix containing the coordinates of the new sites where functional Kriging has to be done.}
   \item{emp.trace.vari}{empirical trace-variogram.}
   \item{trace.vari}{choosed theoretical variogram model}
   \item{new.Eu.d}{distance matrix among sampling and new sites.}
-  \item{functional.kriging.weights}{functional kriging weights.}
+  \item{functional.Kriging.weights}{functional Kriging weights.}
   \item{krig.new.data}{predicted values for the new sites.}
   \item{pred.var}{prediction variance.}
   \item{trace.vari.array}{vector of all fitted variogram models.}
   \item{datafd}{a functional data object containing a smooth of the data.}
 }
 \references{
-  Giraldo, R. (2009) \emph{Geostatistical Analysis of Functional Data.} Ph.D. thesis. Universitat Politècnica de Catalunya.
+Giraldo, R. (2009) \emph{Geostatistical Analysis of Functional Data.} Ph.D. thesis. Universitat Politecnica de Catalunya.
+
+Giraldo, R., Delicado, P. and Mateu, J. (2012) \emph{\pkg{geofd}: An R package for function-valued geostatistical prediction}. 
+Revista Colombiana de Estadistica. 35, 385-407.
 }
 \author{
   Ramon Giraldo \email{rgiraldoh@unal.edu.co}, \cr
@@ -114,7 +117,9 @@ okfd(new.coords, coords, data, smooth.type=NULL, nbasis=max(50,dim(data)[1]),
 
 # First example: one site prediction using B-splines for smoothing
 
-data(maritimes)
+data(maritimes.avg)
+data(maritimes.coords)
+data(maritimes.data)
 
 coord.cero <- matrix(c(-64.06, 45.79),nrow=1,ncol=2)
 

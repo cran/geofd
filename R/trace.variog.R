@@ -1,21 +1,5 @@
-#the binning is
-#     defined as follows:
-#
-#       1. read the argument ‘max.dist’. If not provided it is set to
-#          the maximum distance between the pairs of points.
-#
-#       2. the center of the bins are initially defined by the sequence
-#          ‘u = seq(0, max.dist, l = 13)’.
-#
-#       3. the interval spanned by each bin is given by the mid-points
-#          between the centers of the bins.
-#
-#     If an vector is passed to the argument ‘breaks’ its elements are
-#     taken as the limits of the bins (classes of distance) and the
-#     argument ‘uvec’ is ignored.
-
-# nugget.tolerance, uvec y breaks son solo para bin variogram
-"trace.variog"<-function(coords, L2norm, bin=FALSE, max.dist, uvec="default", breaks="default", nugget.tolerance){
+trace.variog <-
+function(coords, L2norm, bin=FALSE, max.dist, uvec="default", breaks="default", nugget.tolerance){
 
   # Argument validation
   if(is.null(coords)) stop("coords is not an optional parameter")
@@ -26,17 +10,17 @@
   # Euclidian distance among sites
   Eu.d <- as.matrix(dist(coords, method="euclidean"))
 
-  # Los valores del variograma son las diferencias punto a punto entre todas
-  # las curvas de L2norm. La extracción de los valores del variograma
-  # se hace quitando la parte superior de la matriz L2norm excluyendo la
-  # diagonal y pasando secuencialmente por filas el resultado a un arreglo
+  # The variogram values are the point to point differences between all 
+  # the curves in L2norm. The variogram values are obtained by 
+  # removing the upper part of matrix L2norm, excluding the diagonal and
+  # sequantially passing the result by rows to an array
   vtemp <- array(as.dist(L2norm))
 
-  # Los valores de distancia se extraen igual que los valores del variograma
+  # The distance values are obtained similarly to the variogram values
   utemp <- array(as.dist(Eu.d))
 
-  # Se define temporalmente el valor de máxima distancia para utilizarse
-  # en .define.bins y como valor definitivo de max.dist en cloud
+  # The maxim distance value is defined temporarily to be used 
+  # in .define.bins and as a definite value max.dist in cloud
   if(missing(max.dist)){
     umax <- max(utemp)
   }else{
@@ -46,8 +30,10 @@
   # |bin|<---lag--->|bin|<---lag--->|bin|<---lag--->|bin|<---lag--->|bin|
 
   if(bin){
-    # Si no hay valor de nugget.tolerance o es mas pequeño que cierto valor
-    # se define el nugget.tolerance y se indica que se debe remover el valor del primer bin
+    # If there is no value for nugget.tolerance or 
+    # if it is smaller than a given value
+    # then nugget.tolerance is defined and 
+    # it is indicated that it must be removed from the first bin value
     if(missing(nugget.tolerance) || nugget.tolerance < 1e-11){
       nugget.tolerance <- 1e-12
       nt.ind <- FALSE
@@ -101,68 +87,55 @@
 
 #  plot(u, v)
 
-  # ToDo: que hacer si los bins son muy pequeños, manejar con nugget.tolerance
+  # ToDo: what to do when bins are too small, to manage with nugget.tolerance
 
-  # Se crea el objeto trace-variogram a retornar
-  # ToDo: Se está retornando los objetos 'Eu.d' y 'L2norm' que son formas aumentadas de los objetos 'u' y 'v' cuando el tipo de variograma es cloud
-  # El objeto Eu.d luego es utilizado para calcular el rango del semivariograma
-  # Eu.d y L2norm pueden ser obtenidos de u y v haciendo un ciclo que itere sobre todos los valores:
+  # The trace.variogram object to be returned is created
+  # ToDo: When the variogram type is cloud, 
+  #       objects 'Eu.d' and 'L2norm' are returned, but they are augmented 
+  #       versions of 'u' and 'v' objects.
+  #       The Eu.d object is then used to compute the semivariogram range.
+  #       Eu.d and L2norm can be obtained from u and v by doing a cycle
+  #       iterating over all values
   # [a, b, c]
-  # y cree una matrix de la forma:
+  # and creating a matrix with the structure 
   # 0 a b
   # a 0 c
   # b c 0
   emp.trace.vari <- c(emp.trace.vari, list(u=u, v=v, output.type=output.type, max.dist=max.dist, Eu.d=Eu.d, L2norm=L2norm))
 
-  # Se asigna la clase variogram al objeto de retorno para que luego
-  # pueda ser utilizado como cualquier variomodel de geoR
+  # 'variogram' class is assigned to the returned object. 
+  # Then it can be used as any variomodel in geoR
   class(emp.trace.vari) <- "variogram"
 
   return(emp.trace.vari)
 }
 
-".create.fd.object"<-function(data, smooth.type, argvals, nbasis, lambda){
-
-  if(smooth.type == "fourier"){
-    n <- dim(data)[1]
+".define.bins" <-
+  function(max.dist, uvec = "default", breaks = "default", nugget.tolerance)
+  {
+    if(all(breaks ==  "default")){
+      if (all(uvec == "default")) uvec <- 13
+      if (mode(uvec) == "numeric"){
+        if(length(uvec) == 1){
+          bins.lim <- seq(0, max.dist, l = uvec+1)
+          bins.lim <- c(0, nugget.tolerance, bins.lim[bins.lim >  nugget.tolerance])
+          uvec <- 0.5 * (bins.lim[-1] + bins.lim[-length(bins.lim)])
+        }
+        else{
+          uvec <- c(0, uvec)
+          nvec <- length(uvec)
+          d <- 0.5 * diff(uvec[2:nvec])
+          bins.lim <- c(0, (uvec[2:(nvec - 1)] + d), (d[nvec - 2] + uvec[nvec]))
+          bins.lim <- c(0, nugget.tolerance, bins.lim[bins.lim >  nugget.tolerance])
+        }
+      }
+      else stop("argument uvec can only take a numeric vector")
+    }
+    else{
+      if(mode(breaks) != "numeric") stop("argument breaks can only take a numeric vector")
+      else bins.lim <- breaks
+      bins.lim <- c(0, nugget.tolerance, bins.lim[bins.lim >  nugget.tolerance])
+      uvec <- 0.5 * (bins.lim[-1] + bins.lim[-length(bins.lim)])
+    }
+    return(list(uvec = uvec, bins.lim = bins.lim))
   }
-
-  s <- dim(data)[2] # number of sites
-
-##################################################################
-#  Creating a fd object
-##################################################################
-
-  rangeval <- range(argvals)
-
-  if(smooth.type == "fourier"){
-
-    period <- n
-    basis <- create.fourier.basis(rangeval, nbasis, period)
-    datafd <- Data2fd(argvals=argvals, y=data, basisobj=basis, lambda=lambda)
-
-  }else{
-    # 4 define un spline cubico
-    norder <- 4
-    basis <- create.bspline.basis(rangeval, nbasis, norder)
-
-    datafdPar <- fdPar(basis, Lfdobj=2, lambda)
-    smooth.datafd <- smooth.basis(argvals, data, datafdPar)
-    datafd <- smooth.datafd$fd   
-  }
-
-##################################################################
-# Calculating L2 norm among functions
-# Integral del cuadrado de las diferencias entre las funciones
-##################################################################
-
-  if(smooth.type == "fourier"){
-    M <- fourierpen(basis,Lfdobj=0)
-  }else{
-    M <- bsplinepen(basis,Lfdobj=0)
-  }
-
-  return( list(M=M, datafd=datafd) )
-
-}
-

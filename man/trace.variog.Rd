@@ -40,7 +40,10 @@
 %  \item{uvec}{variogram bin centers.}
 }
 \references{
-  Giraldo, R. (2009) \emph{Geostatistical Analysis of Functional Data.} Ph.D. thesis. Universitat Politècnica de Catalunya.
+Giraldo, R. (2009) \emph{Geostatistical Analysis of Functional Data.} Ph.D. thesis. Universitat Politecnica de Catalunya.
+
+Giraldo, R., Delicado, P. and Mateu, J. (2012) \emph{\pkg{geofd}: An R package for function-valued geostatistical prediction}. 
+Revista Colombiana de Estadistica. 35, 385-407.
 }
 \author{
   Ramon Giraldo \email{rgiraldoh@unal.edu.co}, \cr
@@ -51,7 +54,10 @@
 
 # First example: creating a binned variogram
 # okfd first example
-data(maritimes)
+
+data(maritimes.avg)
+data(maritimes.coords)
+data(maritimes.data)
 coord.cero <- matrix(c(-64.06, 45.79),nrow=1,ncol=2)
 n<-dim(maritimes.data)[1]
 argvals<-seq(1,n, by=1)

@@ -1,5 +1,5 @@
-# Integral del cuadrado de las diferencias entre las funciones
-"l2.norm" <- function(s, datafd, M)
+l2.norm <-
+function(s, datafd, M)
 {
 
   L2norm <- matrix(0,nrow=s,ncol=s)

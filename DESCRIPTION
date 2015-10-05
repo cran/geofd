@@ -1,17 +1,15 @@
 Package: geofd
-Type: Package
-Version: 0.4.6
-Title: Spatial prediction for function value data
-LazyLoad: yes
-LazyData: yes
-License: GPL-2
-Date: 2010-08-09
+Version: 1.0
 Author: Ramon Giraldo <rgiraldoh@unal.edu.co>, Pedro Delicado
         <pedro.delicado@upc.edu>, Jorge Mateu <mateu@mat.uji.es>
-Maintainer: Andres Perez <afperesm@unal.edu.co>
-Description: Prediction for function value spatial data using kriging
-        based methods
-Depends: R (>= 2.10.0), fda, geoR, tkrplot
-Packaged: 2010-08-09 22:14:13 UTC; andresf
+Maintainer: Pedro Delicado <pedro.delicado@upc.edu>
+Title: Spatial Prediction for Function Value Data
+Description: Kriging based methods are used for predicting functional data 
+             (curves) with spatial dependence.
+License: GPL-2
+Depends: fda, geoR
 Repository: CRAN
-Date/Publication: 2010-08-10 14:16:54
+Date: 2015-09-21
+NeedsCompilation: no
+Packaged: 2015-10-05 09:09:31 UTC; delicado
+Date/Publication: 2015-10-05 12:58:15
