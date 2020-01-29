@@ -37,22 +37,28 @@ okfd(new.coords, coords, data, smooth.type=NULL, nbasis=max(50,dim(data)[1]),
     optional. Penalization parameter for smoothing the observed functions.
   }
   \item{cov.model}{
-    a string with the name of the correlation function. Default is NULL, see \code{DETAILS} below. For further details see documentation for the parameter \code{cov.model} from the \code{\link{variofit}} function.
+    a string with the name of the correlation function. Default is NULL, see \code{DETAILS} below. 
+    %For further details see documentation for the parameter \code{cov.model} from the \code{\link{variofit}} function.
   }
   \item{fix.nugget}{
-    logical, indicating whether the \code{nugget} parameter should be estimated or not. For further details see documentation for the parameter \code{nugget} from the \code{\link{variofit}} function.
+    logical, indicating whether the \code{nugget} parameter should be estimated or not. 
+    %For further details see documentation for the parameter \code{nugget} from the \code{\link{variofit}} function.
   }
   \item{nugget}{
-    value for the nugget parameter. For further details see documentation for the parameter \code{nugget} from the \code{\link{variofit}} function.
+    value for the nugget parameter. 
+    %For further details see documentation for the parameter \code{nugget} from the \code{\link{variofit}} function.
   }
   \item{fix.kappa}{
-    logical, indicating whether the \code{kappa} parameter should be estimated or not. For further details see documentation for the parameter \code{fix.kappa} from the \code{\link{variofit}} function.
+    logical, indicating whether the \code{kappa} parameter should be estimated or not. 
+    %For further details see documentation for the parameter \code{fix.kappa} from the \code{\link{variofit}} function.
   }
   \item{kappa}{
-    value of the smoothness parameter. For further details see documentation for the parameter \code{kappa} from the \code{\link{variofit}} function.
+    value of the smoothness parameter. 
+    %For further details see documentation for the parameter \code{kappa} from the \code{\link{variofit}} function.
   }
   \item{max.dist.variogram}{
-    a numerical value defining the maximum distance considered when fitting the variogram. For further details see documentation for the parameter \code{max.dist} from the \code{\link{variofit}} function.
+    a numerical value defining the maximum distance considered when fitting the variogram. 
+    %For further details see documentation for the parameter \code{max.dist} from the \code{\link{variofit}} function.
   }
 }
 \details{

@@ -17,25 +17,29 @@
   \item{L2norm}{L2 norm among functions.}
   \item{bin}{logical, indicating whether the output is the binned variogram.}
   \item{max.dist}{a numerical value defining the maximum distance for the variogram.}
-  \item{uvec}{a vector with values defining the centers of the bins or the number of bins as in \code{\link{variog}}. Only used when 'bin = TRUE'.}
-  \item{breaks}{a vector with values defining the variogram binning as in \code{\link{variog}}. Only used when 'bin = TRUE'.}
+  \item{uvec}{a vector with values defining the centers of the bins or the number of bins.% as in \code{\link{variog}}. 
+  Only used when 'bin = TRUE'.}
+  \item{breaks}{a vector with values defining the variogram binning. % as in \code{\link{variog}}. 
+  Only used when 'bin = TRUE'.}
   \item{nugget.tolerance}{a numeric value defining the shortest lag distance. Only used when 'bin = TRUE'.}
 }
 \details{
   \bold{Binned variogram}
   This is just a visual feature adapted from the cloud variogram and it doesn't have any relation against the fitting of the variogram model or the calculation of the predictions.
 
-  The binning is made in the same manner as in \code{\link{variog}} because it uses the \code{.define.bins} function.
+%The binning is made in the same manner as in \code{\link{variog}} because it uses the \code{.define.bins} function.
 }
 \value{
-  An object of the class variogram as the the \code{\link{variog}} function which is a list with the following components:
+  An object of the class variogram %as the \code{\link{variog}} function 
+  which is a list with the following components:
   \item{u}{a vector with distances.}
   \item{v}{a vector with estimated variogram values at distances given in u.}
   \item{max.dist}{maximum distance of the variogram.}
   \item{output.type}{variogram type.}
   \item{Eu.d}{euclidian distance array among sites.}
   \item{L2norm}{echoes the 'L2norm' argument.}
-  \item{bins.lim}{limits defining the interval spanned by each bin as in \code{\link{variog}}. Only returned when 'bin = TRUE'.}
+  \item{bins.lim}{limits defining the interval spanned by each bin.% as in \code{\link{variog}}. 
+  Only returned when 'bin = TRUE'.}
   \item{nugget.tolerance}{echoes the 'nugget.tolerance' argument.}
 %  \item{uvec}{variogram bin centers.}
 }

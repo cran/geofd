@@ -21,15 +21,15 @@ function(emp.trace.vari, models, sigma2.0, phi.0, fix.nugget=FALSE, nugget=0, fi
   # A comparison variable for choosing the best variogram model is loaded
   trace.vari <- c(NULL)
   trace.vari["value"] <- Inf
-  # Is created an array where the variofit results will be pushed
+  # Is created an array where the .variofit results will be pushed
   trace.vari.array <- c()
-  # A loop is made in order to prove each model and choose the best using as criterion the variofit minimised sum of squares
+  # A loop is made in order to prove each model and choose the best using as criterion the .variofit minimised sum of squares
   for(cont in c(1:length(models))){
-    # The variofit function is called
-    trace.vari.tmp <- variofit(emp.trace.vari, ini.cov.pars=c(sigma2.0,phi.0), max.dist=max.dist.variogram, fix.nugget=fix.nugget, nugget=nugget, fix.kappa=fix.kappa, kappa=kappa, cov.model=models[cont], messages=FALSE)
+    # The .variofit function is called
+    trace.vari.tmp <- .variofit(emp.trace.vari, ini.cov.pars=c(sigma2.0,phi.0), max.dist=max.dist.variogram, fix.nugget=fix.nugget, nugget=nugget, fix.kappa=fix.kappa, kappa=kappa, cov.model=models[cont], messages=FALSE)
     # Each calculated trace variogram is pushed inside trace.vari.array
     trace.vari.array[[length(trace.vari.array)+1]] <- trace.vari.tmp
-    # The last caculated variofit is compared against the last optimal variofit
+    # The last caculated .variofit is compared against the last optimal .variofit
     # If it is more optimal, then it is loaded in the variable wich will be returned
     if(as.numeric(trace.vari.tmp["value"])<as.numeric(trace.vari["value"])){
       trace.vari <- trace.vari.tmp

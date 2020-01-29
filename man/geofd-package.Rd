@@ -28,5 +28,6 @@ Jorge Mateu <mateu@mat.uji.es>
 
 Maintainer: Pedro Delicado <pedro.delicado@upc.edu>
 }
-\keyword{spatial,datagen}
+\keyword{spatial}
+\keyword{datagen}
 

@@ -1,8 +1,8 @@
-import(fda, geoR)
+import(fda)
 
 importFrom(grDevices, colors, rainbow)
-importFrom(graphics, "lines", "plot")
-importFrom(stats, as.dist, dist, quantile, var)
+importFrom(graphics, "lines", "plot", "abline", "boxplot", "curve", "par", "plot.default")
+importFrom(stats, "as.dist", "dist", "quantile", "var", "coef", "lm", "nlm", "nls", "optim", "resid", "uniroot")
 
 
 export(fit.tracevariog)

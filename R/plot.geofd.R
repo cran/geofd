@@ -10,7 +10,7 @@ function(x, emp.trace.vari=x$emp.trace.vari,
   if(length(colors)!=length(trace.vari.array)) stop("the arguments \"colors\" and \"trace.vari.array\" must have the same length")
 
   # The empirical trace variogram is plotted
-  plot(emp.trace.vari, xlab="Distance", ylab="Trace-Variogram", main="Trace-Variogram Cloud")
+  plot.variogram(emp.trace.vari, xlab="Distance", ylab="Trace-Variogram", main="Trace-Variogram Cloud")
 
   # The argument legend parameter for the legend is loaded
   legend <- c("empirical trace variogram")
@@ -18,7 +18,7 @@ function(x, emp.trace.vari=x$emp.trace.vari,
   cont <- 1
   # Each calculated trace variogram is plotted
   for(trace.vari in trace.vari.array){
-    lines(trace.vari,col=colors[cont],lwd=2)
+    lines.variomodel.variofit(trace.vari,col=colors[cont],lwd=2)
     legend <- c(legend, trace.vari$cov.model)
     cont <- cont+1
   }

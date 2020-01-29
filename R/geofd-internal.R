@@ -57,13 +57,13 @@ function(argvals, datafd, coords, new.coords, trace.vari, Eu.d){
 
   # Solving the system
   sigma2 <- trace.vari$cov.pars[1]
-  leftmatrix <- sigma2 - cov.spatial(Eu.d, cov.model=trace.vari$cov.model, cov.pars=trace.vari$cov.pars, kappa=trace.vari$kappa)
+  leftmatrix <- sigma2 - .cov.spatial(Eu.d, cov.model=trace.vari$cov.model, cov.pars=trace.vari$cov.pars, kappa=trace.vari$kappa)
   unosfila <- rep(1,s)
   leftmatrix <- rbind(leftmatrix, unosfila)
   unosycerocolumna <- c(rep(1,s),0)
   leftmatrix <- cbind(leftmatrix, unosycerocolumna)
 
-  rightmatrix <- sigma2 - cov.spatial(new.Eu.d, cov.model=trace.vari$cov.model, cov.pars=trace.vari$cov.pars, kappa=trace.vari$kappa)
+  rightmatrix <- sigma2 - .cov.spatial(new.Eu.d, cov.model=trace.vari$cov.model, cov.pars=trace.vari$cov.pars, kappa=trace.vari$kappa)
   unosfila <- rep(1, new.s)
   rightmatrix <- rbind(rightmatrix, unosfila)
 
@@ -84,132 +84,7 @@ function(argvals, datafd, coords, new.coords, trace.vari, Eu.d){
   return( list(pred=krig.new.data, var=pred.var, new.Eu.d=new.Eu.d, functional.kriging.weights=functional.kriging.weights) )
 
 }
-.Random.seed <-
-c(403L, 10L, 8403068L, -1197935406L, 2004077645L, -42894073L, 
--632561426L, 1750135240L, -299149621L, -2056362199L, 532524920L, 
-1291080870L, 72775361L, 404721491L, -375100414L, 1351719220L, 
--546573641L, -206598483L, 589275076L, -212490262L, 260532309L, 
-1293415919L, -27771402L, -1319687392L, 1025369315L, -14065279L, 
--1469237264L, 583538318L, 2043394553L, 242037643L, 1800249274L, 
-544050876L, 1554155007L, -1210424491L, -1874848660L, -249704254L, 
-825725725L, -1416599145L, -1446358786L, 1038541496L, 1590574235L, 
-280349433L, 1533115464L, 295788406L, 1024633521L, -2025911581L, 
--904320590L, 1632688644L, -1062809273L, 1014676509L, 693621396L, 
--745055686L, -1891543931L, -1571608225L, -211908122L, -1991813008L, 
--23155821L, -1592280015L, -151465248L, 1716495230L, 1389943305L, 
-305312315L, 1780845578L, -165276692L, -803473297L, -1297131611L, 
--1718263972L, -1461976270L, -1142912467L, 82995431L, -2144851442L, 
-979556328L, 77703659L, -307185015L, 212972056L, -151013050L, 
--1037781087L, 804633139L, -183814238L, -1479855468L, -1514084073L, 
--713189619L, -730395100L, 2096526858L, 915959669L, 420354767L, 
-1335057878L, 388428160L, -1316910653L, 43941729L, -786324016L, 
-1205810478L, 467051737L, -2093809941L, 2052750170L, -1496384228L, 
-1916484639L, 910811253L, 755260684L, 1766944994L, 1201027517L, 
--285688265L, -816663330L, -1699696616L, -1128149125L, 1444155161L, 
-848917416L, 376390486L, 710769617L, 907644803L, 1369225746L, 
--801788508L, 999184743L, 881870525L, -1368216012L, -1129957990L, 
--1217859099L, 1087552895L, -1789987578L, -1438314864L, 877168435L, 
-799560913L, -1717039488L, 1594398558L, 1946776745L, -663255205L, 
-350813546L, -667480052L, 1207945295L, -1648615163L, -2011113028L, 
--30569326L, 670119821L, -1226985529L, -1200663378L, 408786184L, 
--1640905973L, 1076030953L, 1356577464L, -2108187290L, 310449665L, 
-2143977619L, -1764902078L, -879954700L, 1356259575L, 46160109L, 
-1551489924L, 1327199658L, 1488939797L, 1286478255L, -1125115466L, 
-845397984L, -816279773L, -74391487L, -1453016272L, -1857097394L, 
-204399545L, -251816501L, -282958214L, -1858417796L, -1556855873L, 
--1687343979L, -1712049492L, 1712124034L, -2140422051L, -943163561L, 
-1458367038L, 1618534008L, 1560296795L, -1252807495L, 1335182600L, 
-699582390L, -564302607L, -1966331101L, 474393970L, 1009829828L, 
-762110855L, -595611299L, 1479798612L, 2112206202L, 1987809477L, 
-783757855L, 275878L, -262621392L, 1330036179L, 1533496305L, -115757792L, 
--1536939074L, -1225350199L, 231469947L, 666882378L, 1674100140L, 
-1947650223L, -1310338459L, -562689508L, 17376370L, -526050579L, 
-1524270887L, -1759239346L, 1031449512L, 243175339L, 1027710153L, 
--1532007208L, -1239862906L, 1367083105L, 811493875L, 701962338L, 
--496595244L, -1158981673L, 1220904397L, -40885916L, -517741238L, 
-892691637L, -244751345L, -1011352298L, -811710528L, -1264389245L, 
-63586721L, 251293072L, -501506450L, -209991655L, 1187058859L, 
-852273306L, -1971210148L, 2042443103L, 418234165L, -592375092L, 
-1026707490L, -382797187L, -1792328496L, -617862868L, -1956456716L, 
--1863690862L, 229064800L, 966149388L, 1060328160L, -957631134L, 
--157865304L, 1909559884L, -199561860L, 1966256434L, 124402800L, 
-885629764L, 376256984L, -532804486L, -1474912720L, -1043320132L, 
--2073285804L, 719118402L, 607627680L, -1414818116L, -1951033904L, 
--257315486L, 806035432L, 2127687628L, -344589572L, 1372646898L, 
--1617599360L, 803299572L, -812236152L, -1946320070L, 462159696L, 
--52202900L, -303679340L, -1157324462L, 1859725024L, 1911660236L, 
--615382880L, 1807034242L, -81680664L, 658775788L, -6406084L, 
--1663431054L, 1864408176L, 351388196L, 569872440L, 1586927642L, 
--391424304L, -2059215812L, 1889092756L, -329586558L, 1423134656L, 
--945608388L, 1349357200L, -772274142L, 1071335432L, 732085388L, 
--626805732L, 1758888594L, -1661882240L, -449567724L, 1668620584L, 
--497509830L, 2044875984L, -1413235604L, 2120892084L, 912910354L, 
-1948725216L, 317967308L, -1418967584L, -1826219486L, -255109848L, 
--737628916L, 2063664700L, 564746482L, 1990584048L, -1938358460L, 
-76088920L, -1464219078L, 21942000L, 1252309180L, -1407968748L, 
-202742978L, -2072122272L, 109841788L, 2034784464L, 687950882L, 
-1064330920L, 385330060L, -1360439876L, -77437902L, -401551552L, 
--1003510604L, -761667768L, 291680954L, -1749532912L, 806700268L, 
--1194398636L, -968626414L, 1679417248L, -726719540L, 1482054496L, 
-1141302466L, -1318437336L, 1936227756L, -1330648260L, 1966692210L, 
--1915289808L, -2094008796L, -590992328L, 502687962L, 1928297872L, 
--829465860L, 459023252L, 1440669506L, 308446720L, -277254596L, 
--1884417456L, 435363490L, 888523592L, 728818188L, -1162028836L, 
--1577543086L, -184747904L, -28228780L, -1686942232L, -1968025862L, 
-1930873680L, -2102031316L, -1065764492L, -119695726L, 319544928L, 
-1106474636L, 1361352544L, 1600332514L, -409841496L, -1265214260L, 
--1171385860L, 24537010L, 870828528L, -441567804L, -16092328L, 
-1407045498L, -913480272L, 245243324L, -410735532L, 658919362L, 
-1847924512L, 870785980L, 1496178256L, -696313374L, 35071336L, 
--842640052L, -1192805124L, -1764351246L, 1990347520L, -1439175052L, 
-1665989640L, -981464646L, 1929751504L, 1229706732L, 1194262420L, 
--2067902766L, -805795232L, 2119423308L, -1489694432L, -2135103870L, 
--1224505880L, 1314937836L, 1990466108L, -2123291022L, -2010129552L, 
-158480676L, -132961736L, -1706481254L, -1720046128L, 1282870716L, 
--237689708L, 1393315970L, -1935641152L, -1539897540L, -1356687216L, 
-239995682L, 725058056L, -1604255476L, 167651740L, 645503506L, 
--2011766912L, 394883860L, -1812489944L, -1829330886L, 1119802320L, 
-141854316L, 626651700L, 720623250L, 903679328L, 1509597516L, 
--1836289056L, 1990640034L, 415818152L, -1409483124L, -1545538116L, 
-183706226L, -1513903120L, -192832956L, 1145380952L, 926463034L, 
-1876499568L, -2074180548L, -1460806380L, -2047286590L, 1502680800L, 
--831005572L, 1830552272L, 1461281186L, -767486936L, -1719560436L, 
-2084963772L, 2070816562L, -717222208L, -1846417356L, -1646776632L, 
-891349178L, 935969424L, 72689388L, 529977940L, -737231563L, 1453472914L, 
--520407968L, 346886601L, 827410683L, -124700980L, 731122522L, 
-1017663055L, -728855783L, -1783343826L, -2090733764L, -2098983763L, 
-1557618519L, -1709608288L, 1858558L, 1708866251L, -1470079795L, 
-824541178L, -944606152L, -259869215L, 529415827L, 1709018292L, 
--1572416062L, 465315287L, 1705314849L, -292357658L, -1687072540L, 
--760270827L, -252465089L, -200482856L, -1935220234L, 2068537859L, 
-1929196869L, 1671176546L, -981292336L, 607553017L, 1681812779L, 
--316330340L, -2037302070L, -915450433L, -1515214583L, -2143385058L, 
--822835252L, 1129051549L, 1944301607L, -803692976L, 1919757038L, 
--828091493L, -1076084227L, 838710506L, 983613320L, 1746458929L, 
-1786505635L, 2101927332L, 466698322L, 58971047L, 216025073L, 
--457284810L, -1110872108L, -1470294683L, -1562748561L, 1371988904L, 
-577767686L, 118073395L, 466321045L, 782915314L, 2074486592L, 
--1260948311L, 1772095771L, -1563128084L, -1953942790L, 2143820591L, 
--497171655L, 1397101902L, 1847813020L, -369792755L, 452946807L, 
-2118418304L, 1185705438L, 943952555L, 886066605L, -329522662L, 
--688098088L, -40879807L, -1139695117L, -1548146668L, 183168418L, 
--1577194825L, 1687307393L, -1106938746L, -1008226108L, 510004725L, 
--1099409313L, 95126200L, -242689130L, -19650141L, -1108304539L, 
--2017264510L, -1670212112L, 703980441L, 1723352459L, 666906748L, 
-1139561130L, -1387442977L, -673904023L, -1687820162L, -1717424020L, 
--1011201859L, -736527993L, 563768688L, -1040492530L, -1179904709L, 
-773224989L, 937287370L, 713660904L, -238235951L, 2075265731L, 
-1771585988L, -2046892430L, -1818192057L, 1876592401L, -1973290346L, 
--656400396L, 962636165L, -292281137L, 1915657672L, -185371546L, 
-1435677331L, 1979185653L, 2133971922L, -1671952352L, 1334141449L, 
-2097773371L, -953889140L, 1892180762L, -1580702321L, -1375618343L, 
-1968543086L, -742967044L, -406584723L, 1770642967L, 1709202400L, 
--1996183618L, -1790749301L, -601897459L, -1947461062L, -1486261640L, 
--1901995487L, 1468298451L, -693308428L, 392057986L, 873692439L, 
-12168161L, 1161887014L, -1507345372L, 1750382293L, 1692070527L, 
-1453957912L, 556939830L, 1767595203L, 1912303877L, -1572575070L, 
-1070153360L, 181418553L, -158416149L, -358005796L, -98621942L, 
-1869682943L, -660390583L, 236996562L)
+
 .simple.fdmodel <-
 function(new.coords, coords, data,
     smooth.type=NULL, nbasis=max(50,dim(data)[1]), argvals=seq(0, 1, len = dim(data)[1]), lambda=0,
@@ -240,3 +115,897 @@ function(new.coords, coords, data,
   return( list(fdobjects=fdobjects, emp.trace.vari=emp.trace.vari, trace.vari.objects=trace.vari.objects) )
 
 }
+
+# Functions copied from geoR in January 2020, because geoR was close to be uncontinued
+.cov.spatial <-  # copied from geoR in January 2020, because geoR was close to be uncontinued
+  function(obj, cov.model = "matern",
+           cov.pars = stop("no cov.pars argument provided"),
+           kappa = 0.5)
+  {
+    fn.env <- sys.frame(sys.nframe())
+    .check.cov.model(cov.model=cov.model, cov.pars=cov.pars, kappa=kappa,
+                     env=fn.env, output=FALSE)
+    phi <- get("phi", envir=fn.env)
+    sigmasq <- get("sigmasq", envir=fn.env)
+    ##
+    ## computing correlations/covariances
+    ##
+    #  covs <- array(0, dim = dim(obj))
+    covs <- obj; covs[] <- 0 
+    for(i in 1:get("ns", envir=fn.env)) {
+      if(phi[i] < 1e-16)
+        cov.model[i] <- "pure.nugget"
+      obj.sc <- obj/phi[i]
+      cov.values <- switch(cov.model[i],
+                           pure.nugget = rep(0, length(obj)),
+                           wave = (1/obj) * (phi[i] * sin(obj.sc)),
+                           exponential = exp( - (obj.sc)),
+                           matern = {
+                             if(kappa[i] == 0.5) exp( - (obj.sc))
+                             else matern(u = obj, phi = phi[i], kappa = kappa[i])},
+                           gaussian = exp( - ((obj.sc)^2)),
+                           spherical = ifelse(obj < phi[i], (1 - 1.5 * (obj.sc) +
+                                                               0.5 * (obj.sc)^3), 0),
+                           circular = {
+                             obj.sc[obj.sc > 1] <- 1;
+                             ifelse(obj < phi[i], (1 - (2 * ((obj.sc) *
+                                                               sqrt(1 - ((obj.sc)^2)) +
+                                                               asin(obj.sc)))/pi), 0)
+                           },
+                           cubic = {
+                             ifelse(obj < phi[i], (1 - (7 * (obj.sc^2) -
+                                                          8.75 * (obj.sc^3) +
+                                                          3.5 * (obj.sc^5) -
+                                                          0.75 * (obj.sc^7))), 0)
+                           },
+                           power = (obj)^phi,
+                           powered.exponential = exp( - ((obj.sc)^kappa[i])),
+                           cauchy = (1 + (obj.sc)^2)^(-kappa[i]),
+                           gneiting = {
+                             obj.sc <- 0.301187465825 * obj.sc;   
+                             t2 <- (1 - obj.sc);
+                             t2 <- ifelse(t2 > 0, (t2^8), 0);
+                             (1 + 8 * obj.sc + 25 * (obj.sc^2) + 32 * (obj.sc^3)) * t2
+                           },
+                           gencauchy = (1 + (obj.sc)^kappa[2])^(-kappa[1]/kappa[2]),
+                           gneiting.matern = {
+                             obj.sc <- 0.301187465825 * obj.sc/kappa[2] ;
+                             t2 <- (1 - obj.sc);
+                             t2 <- ifelse(t2 > 0, (t2^8), 0);
+                             cov.values <- (1 + 8 * obj.sc + 25 * (obj.sc^2) + 32 * (obj.sc^3)) * t2;
+                             cov.values * matern(u = obj, phi = phi[i], kappa = kappa[1])
+                             
+                           },
+                           stop("wrong or no specification of cov.model")
+      )
+      if(cov.model[i] == "power"){
+        A <- (max(cov.values)/sqrt(pi))*gamma((1+phi[i])/2)*gamma(1-(phi[i]/2))
+        ## 1:2 below ensures valid results for 1 and 2D
+        A <- A * max(gamma(phi[i]+(1+(1:2))/2)/(gamma(1+phi[i])*gamma((1+(1:2))/2)))
+        cov.values <- A - cov.values
+        cov.values <- cov.values/max(cov.values)
+      }
+      cov.values <- ifelse(obj < 1e-16, sigmasq[i], sigmasq[i] * cov.values)
+      covs <- covs + cov.values
+    }
+    #  if(all(cov.model == "power"))
+    #    covs <- max(covs) - covs
+    #  else covs[obj < 1e-16] <- sum(sigmasq)
+    if(sum(sigmasq) < 1e-16) covs[obj < 1e-16] <- 1
+    if(any(!is.finite(covs))) warning("Infinity value in .cov.spatial")
+    if(any(is.na(covs))) warning("NA value in .cov.spatial")
+    if(any(is.nan(covs))) warning("NaN value in .cov.spatial")
+    return(covs)
+}
+
+
+.variofit <- # copied from geoR in January 2020, because geoR was close to be uncontinued
+  function (vario, ini.cov.pars, cov.model,
+            fix.nugget = FALSE, nugget = 0, 
+            fix.kappa = TRUE, kappa = 0.5,
+            simul.number = NULL,  max.dist = vario$max.dist,
+            weights, minimisation.function,
+            limits = pars.limits(), messages, ...) 
+  {
+    call.fc <- match.call()
+    if(missing(messages))
+      messages.screen <- as.logical(ifelse(is.null(getOption("geoR.messages")), TRUE, getOption("geoR.messages")))
+    else messages.screen <- messages
+    if(length(class(vario)) == 0 || all(class(vario) != "variogram"))
+      warning("object vario should preferably be of the geoR's class \"variogram\"")
+    if(!missing(ini.cov.pars)){
+      if(any(class(ini.cov.pars) == "eyefit"))
+        cov.model <- ini.cov.pars[[1]]$cov.model
+      if(any(class(ini.cov.pars) == "variomodel"))
+        cov.model <- ini.cov.pars$cov.model
+    }
+    if(missing(cov.model)) cov.model <- "matern"
+    cov.model <- match.arg(cov.model, choices =  c("matern", "exponential", "gaussian", "spherical",
+      "circular", "cubic", "wave", "linear", "power",
+      "powered.exponential", "stable", "cauchy", "gencauchy",
+      "gneiting", "gneiting.matern", "pure.nugget"))
+    if(cov.model == "stable") cov.model <- "powered.exponential"
+    if(cov.model == "powered.exponential")
+      if(limits$kappa["upper"] > 2) limits$kappa["upper"] <- 2
+    ##  if(cov.model == "matern" | cov.model == "    powered.exponential" | 
+    ##     cov.model == "cauchy" | cov.model == "gneiting.matern")
+    ##    fix.kappa <- TRUE
+    if(missing(weights)){
+      if(vario$output.type == "cloud") weights <- "equal"
+      else weights <- "npairs"
+    }
+    else
+      weights <- match.arg(weights, choices = c("npairs", "equal", "cressie"))
+    if(messages.screen){
+      cat(paste(".variofit: covariance model used is", cov.model, "\n"))
+      cat(paste(".variofit: weights used:", weights, "\n"))
+    }
+    #  if(missing(minimisation.function)){
+    #    if(weights == "equal") minimisation.function <- "nls"
+    #    else minimisation.function <- "optim"
+    #  }
+    if(missing(minimisation.function))
+      minimisation.function <- "optim"
+    if(any(cov.model == c("linear", "power")) & minimisation.function == "nls"){
+      cat("warning: minimisation function nls can not be used with given cov.model.\n          changing for \"optim\".\n")
+      minimisation.function <- "optim"
+    }
+    if(minimisation.function == "nls" & weights != "equal"){
+      warning(".variofit: minimisation function nls can only be used with weights=\"equal\".\n          changing for \"optim\".\n")
+      minimisation.function <- "optim"
+    }
+    if (is.matrix(vario$v) & is.null(simul.number)) 
+      stop("object in vario$v is a matrix. This function works for only 1 empirical variogram at once\n")
+    if (!is.null(simul.number)) 
+      vario$v <- vario$v[, simul.number]
+    ##
+    ## Setting maximum distance
+    ##
+    if(mode(max.dist) != "numeric" || length(max.dist) > 1)
+      stop("a single numerical value must be provided in the argument max.dist") 
+    if (max.dist == vario$max.dist) 
+      XY <- list(u = vario$u, v = vario$v, n=vario$n)
+    else
+      XY <- list(u = vario$u[vario$u <= max.dist],
+                 v = vario$v[vario$u <= max.dist],
+                 n = vario$n[vario$u <= max.dist])
+    if(cov.model == "pure.nugget"){
+      ##
+      ## parameter estimation for model which does not require numerical minimisation
+      ##
+      minimisation.function <- "not used"
+      message <- "correlation function does not require numerical minimisation"
+      if(weights == "equal") lm.wei <- rep(1, length(XY$u))
+      else lm.wei <- XY$n
+      if(cov.model == "pure.nugget"){
+        if(fix.nugget){
+          temp <- lm((XY$v-nugget) ~ 1, weights = lm.wei)
+          cov.pars <- c(temp$coef, 0)
+        }
+        else{
+          temp <- lm(XY$v ~ 1, weights = lm.wei)
+          nugget <- temp$coef
+          cov.pars <- c(0,0)
+        }
+      }
+      value <- sum((temp$residuals)^2)
+    }
+    else{
+      if(messages.screen)
+        cat(paste(".variofit: minimisation function used:", minimisation.function, "\n"))
+      ##
+      ## setting things for numerical minimisation
+      ##
+      ##  Checking initial values
+      ##
+      umax <- max(vario$u)
+      vmax <- max(vario$v)
+      if(missing(ini.cov.pars)){
+        ini.cov.pars <- as.matrix(expand.grid(c(vmax/2, 3*vmax/4, vmax),
+                                              seq(0, 0.8*umax, len=6)))
+        if(!fix.nugget)
+          nugget <- unique(c(nugget, vmax/10, vmax/4, vmax/2))
+        if(!fix.kappa)
+          kappa <- unique(c(kappa, 0.25, 0.5, 1, 1.5, 2))
+        if(messages.screen)
+          warning("initial values not provided - running the default search")
+      }
+      else{
+        if(any(class(ini.cov.pars) == "eyefit")){
+          init <- nugget <- kappa <- NULL
+          for(i in 1:length(ini.cov.pars)){
+            init <- drop(rbind(init, ini.cov.pars[[i]]$cov.pars))
+            nugget <- c(nugget, ini.cov.pars[[i]]$nugget)
+            if(cov.model == "gneiting.matern")
+              kappa <- drop(rbind(kappa, ini.cov.pars[[i]]$kappa))
+            else
+              kappa <- c(kappa, ini.cov.pars[[i]]$kappa)
+          }
+          ini.cov.pars <- init
+        }
+        if(any(class(ini.cov.pars) == "variomodel")){
+          nugget <- ini.cov.pars$nugget
+          kappa <- ini.cov.pars$kappa
+          ini.cov.pars <- ini.cov.pars$cov.pars
+        }
+      }
+      if(is.matrix(ini.cov.pars) | is.data.frame(ini.cov.pars)){
+        ini.cov.pars <- as.matrix(ini.cov.pars)
+        if(nrow(ini.cov.pars) == 1)
+          ini.cov.pars <- as.vector(ini.cov.pars)
+        else{
+          if(ncol(ini.cov.pars) != 2)
+            stop("\nini.cov.pars must be a matrix or data.frame with 2 components: \ninitial values for sigmasq (partial sill) and phi (range parameter)\n")
+        }
+      }
+      else
+        if(length(ini.cov.pars) > 2)
+          stop("\nini.cov.pars must provide initial values for sigmasq and phi\n")
+      ##
+      ## Preparing grid of initial values and choosing the best
+      ##
+      if(is.matrix(ini.cov.pars) | (length(nugget) > 1) | (length(kappa) > 1)) {
+        if(messages.screen)
+          cat(".variofit: searching for best initial value ...")
+        ini.temp <- matrix(ini.cov.pars, ncol=2)
+        grid.ini <- as.matrix(expand.grid(sigmasq=unique(ini.temp[,1]),
+                                          phi=unique(ini.temp[,2]),
+                                          tausq=unique(nugget), kappa=unique(kappa)))
+        ##  loss function:
+        v.loss <- function(parms, u, v, n, cov.model, weights){
+          sigmasq <- parms[1]
+          phi <- parms[2]
+          if(cov.model == "power") phi <- 2 * exp(phi)/(1+exp(phi))
+          tausq <- parms[3]
+          kappa <- parms[4]
+          if(cov.model == "power")
+            v.mod <- tausq +
+            .cov.spatial(u, cov.pars=c(sigmasq, phi), cov.model="power", kappa=kappa)
+          else
+            v.mod <- (sigmasq + tausq) -
+            .cov.spatial(u, cov.pars=c(sigmasq, phi), cov.model = cov.model,
+                        kappa = kappa)
+          if(weights == "equal")
+            loss <- sum((v - v.mod)^2)
+          if (weights == "npairs") 
+            loss <- sum(n * (v - v.mod)^2)
+          if (weights == "cressie") 
+            loss <- sum((n/(v.mod^2)) * (v - v.mod)^2)
+          return(loss)
+        }
+        grid.loss <- apply(grid.ini, 1, v.loss, u=XY$u, v=XY$v, n=XY$n, cov.model = cov.model, weights = weights)
+        ini.temp <- grid.ini[which(grid.loss == min(grid.loss))[1],, drop=FALSE]
+        if(is.R()) rownames(ini.temp) <- "initial.value"
+        if(messages.screen){
+          cat(" selected values:\n")
+          print(rbind(round(ini.temp, digits=2), status=ifelse(c(FALSE, FALSE, fix.nugget, fix.kappa), "fix", "est")))
+          cat(paste("loss value:", min(grid.loss), "\n"))
+        }
+        names(ini.temp) <- NULL
+        ini.cov.pars <- ini.temp[1:2]
+        nugget <- ini.temp[3]
+        kappa <- ini.temp[4]
+        grid.ini <- NULL
+      }
+      ##
+      ## checking for unreasonable initial values
+      ##
+      if(ini.cov.pars[1] > 2*vmax)
+        warning("unreasonable initial value for sigmasq (too high)")
+      if(ini.cov.pars[1] + nugget > 3*vmax)
+        warning("unreasonable initial value for sigmasq + nugget (too high)")
+      if(vario$output.type != "cloud"){
+        if(ini.cov.pars[1] + nugget < 0.3*vmax)
+          warning("unreasonable initial value for sigmasq + nugget (too low)")
+      }
+      if(nugget > 2*vmax)
+        warning("unreasonable initial value for nugget (too high)")
+      if(ini.cov.pars[2] > 1.5*umax)
+        warning("unreasonable initial value for phi (too high)")
+      ##
+      ## transforming kappa for constraint minimisation
+      ##
+      if(!fix.kappa){
+        if(cov.model == "powered.exponential")
+          Tkappa.ini <- log(kappa/(2-kappa))
+        else
+          Tkappa.ini <- log(kappa)
+      }
+      ##
+      ## minimisation using "nls"
+      ##
+      if (minimisation.function == "nls") {
+        if(ini.cov.pars[2] == 0) ini.cov.pars <- max(XY$u)/10
+        if(kappa == 0) kappa <- 0.5
+        if(cov.model == "power")
+          Tphi.ini <- log(ini.cov.pars[2]/(2-ini.cov.pars[2])) 
+        else Tphi.ini <- log(ini.cov.pars[2])
+        XY$cov.model <- cov.model
+        ##
+        if (fix.nugget) {
+          XY$nugget <- as.vector(nugget)
+          if(fix.kappa){
+            XY$kappa <- as.vector(kappa)
+            res <- nls((v-nugget) ~ matrix((1-.cov.spatial(u,cov.pars=c(1,exp(Tphi)),
+                                                          cov.model=cov.model, kappa=kappa)),
+                                           ncol=1),
+                       start=list(Tphi=Tphi.ini), data=XY, algorithm="plinear", ...)
+          }
+          else{
+            if(cov.model == "powered.exponential")
+              res <- nls((v-nugget) ~ matrix((1-.cov.spatial(u,cov.pars=c(1,exp(Tphi)),
+                                                            cov.model=cov.model,
+                                                            kappa=(2*exp(Tkappa)/(1+exp(Tkappa))))),
+                                             ncol=1),
+                         start=list(Tphi=Tphi.ini, Tkappa = Tkappa.ini),
+                         data=XY, algorithm="plinear", ...)
+            else
+              res <- nls((v-nugget) ~ matrix((1-.cov.spatial(u,cov.pars=c(1,exp(Tphi)),
+                                                            cov.model=cov.model,
+                                                            kappa=exp(Tkappa))), ncol=1),
+                         start=list(Tphi=Tphi.ini, Tkappa = Tkappa.ini),
+                         data=XY, algorithm="plinear", ...)       
+            kappa <- exp(coef(res)["Tkappa"])
+            names(kappa) <- NULL
+          }
+          cov.pars <- coef(res)[c(".lin", "Tphi")]
+          names(cov.pars) <- NULL
+        }
+        else{
+          if(fix.kappa){
+            XY$kappa <- kappa
+            res <- nls(v ~ cbind(1,(1- .cov.spatial(u, cov.pars=c(1,exp(Tphi)),
+                                                   cov.model = cov.model, kappa=kappa))),
+                       start=list(Tphi=Tphi.ini), algorithm="plinear", data=XY, ...)
+          }
+          else{
+            if(cov.model == "powered.exponential")
+              res <- nls(v ~ cbind(1, (1-.cov.spatial(u, cov.pars=c(1, exp(Tphi)),
+                                                     cov.model = cov.model,
+                                                     kappa=(2*exp(Tkappa)/(1+exp(Tkappa)))))),
+                         start=list(Tphi=Tphi.ini, Tkappa = Tkappa.ini),
+                         algorithm="plinear", data=XY, ...)
+            else
+              res <- nls(v ~ cbind(1, (1-.cov.spatial(u, cov.pars=c(1, exp(Tphi)),
+                                                     cov.model = cov.model,
+                                                     kappa=exp(Tkappa)))),
+                         start=list(Tphi=Tphi.ini, Tkappa = Tkappa.ini),
+                         algorithm="plinear", data=XY, ...)
+            kappa <- exp(coef(res)["Tkappa"]);names(kappa) <- NULL
+          }
+          nugget <- coef(res)[".lin1"];names(nugget) <- NULL
+          cov.pars <- coef(res)[c(".lin2", "Tphi")]
+          names(cov.pars) <- NULL
+        }
+        if(cov.model == "power")
+          cov.pars[2] <- 2 * exp(cov.pars[2])/(1+exp(cov.pars[2]))  
+        else cov.pars[2] <- exp(cov.pars[2])
+        if(nugget < 0 | cov.pars[1] < 0){
+          warning("\n.variofit: negative variance parameter found using the default option \"nls\".\n        Try another minimisation function and/or fix some of the parameters.\n")
+          temp <- c(sigmasq=cov.pars[1], phi=cov.pars[2], tausq=nugget, kappa=kappa)
+          print(rbind(round(temp, digits=4),
+                      status=ifelse(c(FALSE, FALSE, fix.nugget, fix.kappa), "fix", "est")))
+          return(invisible())
+        }
+        value <- sum(resid(res)^2)
+        message <- "nls does not provides convergence message"
+      }
+      ##
+      ## minimisation using "optim" or "nlm"
+      ##
+      if (minimisation.function == "nlm" | minimisation.function == "optim") {
+        ##
+        ## Preparing lists for the minimiser
+        ##
+        .global.list <- list(u = XY$u, v = XY$v, n=XY$n, fix.nugget = fix.nugget,
+                             nugget = nugget, fix.kappa = fix.kappa, kappa = kappa,
+                             cov.model = cov.model, m.f = minimisation.function,
+                             weights = weights)
+        ##
+        ## Preparing initial value
+        ##
+        ini <- ini.cov.pars
+        if(cov.model == "power") ini[2] <- log(ini[2]/(2-ini[2])) 
+        if(cov.model == "linear") ini <- ini[1] 
+        if(fix.nugget == FALSE) ini <- c(ini, nugget)
+        ## setting kappa > 0 for both methods
+        if(!fix.kappa) ini <- c(ini, Tkappa.ini)
+        names(ini) <- NULL
+        # Pedro Delicado, January 29th, 2020:
+        # disabling the "nlm" option because the sentences
+        #    assign(".temp.theta",  NULL, pos=1)
+        #    assign(".temp.theta", theta, pos=1)
+        # do not pass the CRAN checking
+        # if(minimisation.function == "nlm"){
+        #   result <- nlm(.loss.vario, ini, g.l = .global.list, ...)
+        #   result$par <- result$estimate
+        #   result$value <- result$minimum
+        #   result$convergence <- result$code
+        #   if(!is.null(get(".temp.theta", pos =1)))
+        #     result$par <- get(".temp.theta", pos=1)
+        # }
+        # else{
+        {
+          #        if(fix.kappa == FALSE) ini <- c(ini, kappa)
+          #        names(ini) <- NULL
+          lower.l <- sapply(limits, function(x) x[1])
+          upper.l <- sapply(limits, function(x) x[2])
+          if(fix.kappa == FALSE){
+            if(fix.nugget){
+              lower <- lower.l[c("sigmasq.lower", "phi.lower","kappa.lower")]
+              upper <- upper.l[c("sigmasq.upper", "phi.upper","kappa.upper")]
+            }
+            else{
+              lower <- lower.l[c("sigmasq.lower", "phi.lower",
+                                 "tausq.rel.lower", "kappa.lower")]
+              upper <- upper.l[c("sigmasq.upper", "phi.upper",
+                                 "tausq.rel.upper", "kappa.upper")]
+            }
+          }
+          else{
+            if(cov.model == "power"){
+              if(fix.nugget){
+                lower <- lower.l[c("sigmasq.lower", "phi.lower")]
+                upper <- upper.l[c("sigmasq.upper", "phi.upper")]
+              }
+              else{
+                lower <- lower.l[c("sigmasq.lower", "phi.lower", "tausq.rel.lower")]
+                upper <- upper.l[c("sigmasq.upper", "phi.upper", "tausq.rel.upper")]
+              }
+            }
+            else{
+              lower <- lower.l["phi.lower"]
+              upper <- upper.l["phi.upper"]
+            }
+          }
+          result <- optim(ini, .loss.vario, method = "L-BFGS-B",
+                          hessian = TRUE, lower = lower,
+                          upper = upper, g.l = .global.list, ...)
+          #        require(methods)
+          #        if(exists("trySilent"))
+          #          hess <- trySilent(solve(as.matrix(result$hessian)))
+          #        else{
+          #          op.sem <- options()$show.error.messages
+          #          options(show.error.messages = FALSE)
+          #          hess <- try(solve(as.matrix(result$hessian)))
+          #          options(show.error.messages = op.sem)
+          #        }
+          #        if(!inherits(hess, "try-error")) hess <- sqrt(diag(hess))
+          #        else print("WARNING: unable to compute the hessian")
+        }
+        value <- result$value
+        message <- paste(minimisation.function, "convergence code:", result$convergence)
+        if(cov.model == "linear")
+          result$par <- c(result$par[1],1,result$par[-1])
+        cov.pars <- as.vector(result$par[1:2])
+        if(cov.model == "power")
+          cov.pars[2] <- 2 * exp(cov.pars[2])/(1+exp(cov.pars[2]))  
+        if(!fix.kappa){
+          if (fix.nugget)
+            kappa <- result$par[3]
+          else{
+            nugget <- result$par[3]
+            kappa <- result$par[4]
+          }
+          ## kappa now > 0 for both nlm() and optim()
+          ##        if(minimisation.function == "nlm"){
+          if(.global.list$cov.model == "powered.exponential")
+            kappa <- 2*(exp(kappa))/(1+exp(kappa))
+          else kappa <- exp(kappa)
+          ##        }
+        }
+        else
+          if(!fix.nugget)
+            nugget <- result$par[3]        
+      }
+    }
+    ##
+    ## Estimating implicity beta
+    ##
+    
+    ##
+    ## Preparing output
+    ##
+    estimation <- list(nugget = nugget, cov.pars = cov.pars, 
+                       cov.model = cov.model, kappa = kappa, value = value, 
+                       trend = vario$trend, beta.ols = vario$beta.ols,
+                       practicalRange = practicalRange(cov.model=cov.model,
+                                                       phi = cov.pars[2], kappa = kappa),
+                       max.dist = max.dist, 
+                       minimisation.function = minimisation.function)
+    #  if(exists("hess")) estimation$hessian <- hess
+    estimation$weights <- weights
+    if(weights == "equal") estimation$method <- "OLS"
+    else estimation$method <- "WLS"
+    estimation$fix.nugget <- fix.nugget
+    estimation$fix.kappa <- fix.kappa
+    estimation$lambda <- vario$lambda
+    estimation$message <- message
+    estimation$call <- call.fc
+    oldClass(estimation) <- c("variomodel", "variofit")
+    return(estimation)
+  }
+
+.loss.vario <- # copied from geoR in January 2020, because geoR was close to be uncontinued
+  function (theta, g.l) 
+  {
+    if(g.l$cov.model == "linear")
+      theta <- c(theta[1], 1, theta[-1])
+    # Pedro Delicado, January 29th, 2020:
+    # disabling the "nlm" option because the sentences
+    #    assign(".temp.theta",  NULL, pos=1)
+    #    assign(".temp.theta", theta, pos=1)
+    # do not pass the CRAN checking
+    # ##
+    # ## Imposing constraints for nlm
+    # ##
+    # if(g.l$m.f == "nlm"){  
+    #   assign(".temp.theta",  NULL, pos=1)
+    #   if(!g.l$fix.kappa){
+    #     if(g.l$fix.nugget){
+    #       if(g.l$cov.model == "power")
+    #         theta.minimiser <- theta[1]
+    #       else          
+    #         theta.minimiser <- theta[1:2]
+    #       Tkappa <- theta[3]
+    #     }
+    #     else{
+    #       if(g.l$cov.model == "power")
+    #         theta.minimiser <- theta[c(1:3)]
+    #       else          
+    #         theta.minimiser <- theta[1:3]
+    #       Tkappa <- theta[4]
+    #     }
+    #   }
+    #   else theta.minimiser <- theta
+    #   penalty <- 10000 * sum(0 - pmin(theta.minimiser, 0))
+    #   theta <- pmax(theta.minimiser, 0)
+    #   if(!g.l$fix.kappa) theta <- c(theta.minimiser, Tkappa)
+    #   if (any(theta.minimiser < 0)) assign(".temp.theta", theta, pos=1)
+    #   else penalty <- 0
+    # }
+    # else penalty <- 0
+    penalty <- 0 
+    ##
+    ## reading parameters
+    ##
+    if(!g.l$fix.kappa){
+      if (g.l$fix.nugget){
+        tausq <- g.l$nugget
+        Tkappa <- theta[3]
+      }
+      else{
+        tausq <- theta[3]
+        Tkappa <- theta[4]
+      }
+      ## kappa now > 0 for both nlm() and optim()
+      ##if(g.l$m.f == "nlm"){
+      if(g.l$cov.model == "powered.exponential")
+        kappa <-  2*(exp(Tkappa))/(1+exp(Tkappa))
+      else kappa <- exp(Tkappa)
+      ##}
+      ##else kappa <- Tkappa
+    }
+    else{
+      kappa <- g.l$kappa
+      if (g.l$fix.nugget) tausq <- g.l$nugget
+      else tausq <- theta[3]
+    }
+    ##
+    sigmasq <- theta[1]
+    phi <- theta[2]
+    if(g.l$cov.model == "power") phi <- 2 * exp(phi)/(1+exp(phi))
+    sill.total <- sigmasq + tausq
+    ##
+    ## Computing values for the theoretical variogram 
+    ##
+    if(any(g.l$cov.model == c("linear", "power")))
+      gammaU <- tausq + sigmasq * (g.l$u^phi)
+    else
+      gammaU <- sill.total - .cov.spatial(g.l$u, cov.model = g.l$cov.model, 
+                                         kappa = kappa, cov.pars = c(sigmasq, phi))
+    ##
+    ## Computing loss function
+    ##
+    if(g.l$weight == "equal")
+      loss <- sum((g.l$v - gammaU)^2)
+    if (g.l$weights == "npairs") 
+      loss <- sum(g.l$n * (g.l$v - gammaU)^2)
+    if (g.l$weights == "cressie") 
+      loss <- sum((g.l$n/(gammaU^2)) * (g.l$v - gammaU)^2)
+    if(loss > (.Machine$double.xmax^0.5) | loss == Inf | loss == -Inf | is.nan(loss))
+      loss <- .Machine$double.xmax^0.5
+    return(loss + penalty)
+  }
+
+.geoR.cov.models <-
+   c("matern", "exponential", "gaussian", "spherical",
+     "circular", "cubic", "wave", "linear", "power",
+     "powered.exponential", "stable", "cauchy", "gencauchy",
+     "gneiting", "gneiting.matern", "pure.nugget")
+
+"geoRCovModels" <- .geoR.cov.models
+
+"practicalRange" <-
+  function (cov.model, phi, kappa=0.5, correlation = 0.05, ...) 
+  {
+    cov.model <- match.arg(cov.model, choices = .geoR.cov.models)
+    .check.cov.model(cov.model = cov.model, cov.pars=c(1,phi), kappa=kappa, output=FALSE)
+    if(cov.model %in% c("circular","cubic","spherical"))
+      return(phi)
+    if(any(cov.model %in% c("pure.nugget")))
+      return(0)  
+    if(any(cov.model %in% c("linear")))
+      return(Inf)  
+    if(any(cov.model %in% c("power")))
+      return(Inf)  
+    findRange <- function(range, cm, p, k, cor)
+      .cov.spatial(range, cov.model = cm, kappa = k, cov.pars = c(1, p))-cor
+    pr <- uniroot(findRange, interval = c(0, 50 * phi + 1), 
+                  cm = cov.model, p = phi, k = kappa, cor = correlation, 
+                  ...)$root
+    return(pr)
+  }
+
+".check.cov.model" <-
+  function(cov.model, cov.pars, kappa, env=NULL, output=TRUE)
+  {
+    ## extracting covariance parameters
+    if(is.vector(cov.pars)) sigmasq <- cov.pars[1]
+    else sigmasq <- cov.pars[, 1]
+    if(is.vector(cov.pars)) phi <-  cov.pars[2]
+    else phi <- cov.pars[, 2]
+    if(missing(kappa) || is.null(kappa)) kappa <- NA
+    ## checking for nested models
+    cov.pars <- drop(cov.pars)
+    if(is.vector(cov.pars)) ns <- 1
+    else{
+      ns <- nrow(cov.pars)
+      if(length(cov.model) == 1) cov.model <- rep(cov.model, ns)
+      if(length(kappa) == 1) kappa <- rep(kappa, ns)
+    }
+    if(length(cov.model) != ns) stop("wrong length for cov.model")
+    ##
+    cov.model <- sapply(cov.model, match.arg, .geoR.cov.models)
+    cov.model[cov.model == "stable"] <- "powered.exponential"
+    if(any(cov.model == c("gneiting.matern", "gencauchy"))){
+      if(length(kappa) != 2*ns)
+        stop(paste("wrong length for kappa, ", cov.model, "model requires two values for the argument kappa")) 
+    }
+    else{
+      if(length(kappa) != ns) stop('wrong length for kappa')
+    }
+    ## settings for power model (do not reverse order of the next two lines!)
+    phi[cov.model == "linear"] <- 1
+    cov.model[cov.model == "linear"] <- "power"
+    ## checking input for cov. models with extra parameter(s)
+    if(any(cov.model == 'gneiting.matern') && ns > 1)
+      stop('nested models including the gneiting.matern are not implemented') 
+    for(i in 1:ns){
+      if(any(cov.model[i] == c("matern","powered.exponential", "cauchy",
+                               "gneiting.matern", "gencauchy"))){
+        if(any(cov.model[i] == c("gneiting.matern", "gencauchy"))){
+          if(any(is.na(kappa)) || length(kappa) != 2*ns)
+            stop(paste(cov.model[i],"correlation function model requires a vector with 2 parameters in the argument kappa"))
+        }
+        else{
+          if(is.na(kappa[i]) | is.null(kappa[i]))
+            stop("for matern, powered.exponential and cauchy covariance functions the parameter kappa must be provided")
+        }
+        if((cov.model[i] == "matern" | cov.model[i] == "powered.exponential" | 
+            cov.model[i] == "cauchy") & length(kappa) != 1*ns)
+          stop("kappa must have 1 parameter for this correlation function")
+        if(cov.model[i] == "matern" & kappa[i] == 0.5) cov.model[i] == "exponential"
+      }      
+      if(cov.model[i] == "power")
+        if(any(phi[i] >= 2) | any(phi[i] <= 0))
+          stop("for power model the phi parameters must be in the interval ]0,2[")
+    }
+    if(!is.null(env)){
+      assign("sigmasq", sigmasq, envir=env)
+      assign("phi", phi, envir=env)
+      assign("kappa", kappa, envir=env)
+      assign("ns", ns, envir=env)
+      assign("cov.model", cov.model, envir=env)
+    }
+    if(output)
+      return(list(cov.model=cov.model, sigmasq=sigmasq, phi=phi, kappa=kappa, ns=ns))
+    else return(invisible())
+  }
+
+"matern" <-
+  function (u, phi, kappa) 
+  {
+    if(is.vector(u)) names(u) <- NULL
+    if(is.matrix(u)) dimnames(u) <- list(NULL, NULL)
+    uphi <- u/phi
+    uphi <- ifelse(u > 0,
+                   (((2^(-(kappa-1)))/ifelse(0, Inf,gamma(kappa))) *
+                      (uphi^kappa) *
+                      besselK(x=uphi, nu=kappa)), 1)    
+    uphi[u > 600*phi] <- 0 
+    return(uphi)
+}
+
+pars.limits <-
+ function (phi = c(lower = 0, upper = +Inf), 
+          sigmasq = c(lower = 0,upper = +Inf), 
+          nugget.rel = c(lower = 0, upper = +Inf), 
+          kappa = c(lower = 0, upper = +Inf), 
+          kappa2 = c(lower = 0, upper = +Inf), 
+          lambda = c(lower = -3, upper = 3), 
+          psiR = c(lower = 1, upper = +Inf), 
+          psiA = c(lower = 0, upper = 2 * pi), 
+          tausq.rel = nugget.rel) 
+{
+  if (length(phi) != 2) 
+    stop("phi must be a 2 components vector with lower and upper limits for the parameter phi")
+  if (length(sigmasq) != 2) 
+    stop("sigmasq must be a 2 components vector with lower and upper limits for the parameter sigmasq")
+  if (length(tausq.rel) != 2) 
+    stop("tausq.rel must be a 2 components vector with lower and upper limits for the parameter tausq.rel")
+  if (length(kappa) != 2) 
+    stop("kappa must be a 2 components vector with lower and upper limits for the parameter kappa")
+  if (length(kappa2) != 2) 
+    stop("kappa must be a 2 components vector with lower and upper limits for the parameter kappa")
+  if (length(lambda) != 2) 
+    stop("lambda must be a 2 components vector with lower and upper limits for the parameter lambda")
+  if (length(psiR) != 2) 
+    stop("psiR must be a 2 components vector with lower and upper limits for the parameter psiR")
+  if (length(psiA) != 2) 
+    stop("psiA must be a 2 components vector with lower and upper limits for the parameter psiA")
+  if (phi[1] >= phi[2]) 
+    stop("parameter phi: lower limit greater or equal upper limit")
+  if (sigmasq[1] >= sigmasq[2]) 
+    stop("parameter sigmasq: lower limit greater or equal upper limit")
+  if (tausq.rel[1] >= tausq.rel[2]) 
+    stop("parameter tausq.rel: lower limit greater or equal upper limit")
+  if (kappa[1] >= kappa[2]) 
+    stop("parameter kappa: lower limit greater or equal upper limit")
+  if (kappa2[1] >= kappa2[2]) 
+    stop("parameter kappa: lower limit greater or equal upper limit")
+  if (lambda[1] >= lambda[2]) 
+    stop("parameter lambda: lower limit greater or equal upper limit")
+  if (psiR[1] >= psiR[2]) 
+    stop("parameter psiR: lower limit greater or equal upper limit")
+  if (psiA[1] >= psiA[2]) 
+    stop("parameter psiA: lower limit greater or equal upper limit")
+  names(phi) <- names(sigmasq) <- names(tausq.rel) <- names(kappa) <- names(kappa2) <- names(lambda) <- names(psiR) <- names(psiA) <- c("lower", 
+                                                                                                                                        "upper")
+  return(list(phi = phi, sigmasq = sigmasq, tausq.rel = tausq.rel, 
+              kappa = kappa, kappa2 = kappa2, lambda = lambda, psiR = psiR, 
+              psiA = psiA))
+ }
+
+"plot.variogram" <-
+  function (x, max.dist, vario.col = "all", scaled = FALSE,  
+            var.lines = FALSE,  envelope.obj = NULL,
+            pts.range.cex, bin.cloud = FALSE,  ...) 
+  {
+    fc.call <- match.call()
+    fc.call$max.dist <- fc.call$vario.col <- fc.call$scaled <- 
+      fc.call$pts.range.cex <-  fc.call$bin.cloud <-
+      fc.call$envelope.obj <- NULL
+    Ldots <- list(...)
+    argsnames <- c(names(formals(plot.default)), names(par()))
+    names(Ldots) <- argsnames[charmatch(names(Ldots), argsnames)]
+    if(missing(max.dist)) max.dist <- max(x$u)
+    if(is.null(Ldots$xlim)) fc.call$xlim <- c(0, max.dist) 
+    if (bin.cloud == TRUE && all(is.na(x$bin.cloud))) 
+      stop("plot.variogram: object must be a binned variogram with option bin.cloud=TRUE")
+    if (bin.cloud == TRUE && any(!is.na(x$bin.cloud))) 
+      boxplot(x$bin.cloud, varwidth = TRUE, 
+              xlab = "distance", ylab = paste(x$estimator.type, "variogram"))
+    else {
+      if(!missing(pts.range.cex)){
+        cex.min <- min(pts.range.cex)
+        cex.max <- max(pts.range.cex)
+        if(cex.min != cex.max){
+          pts.prop <- TRUE
+          sqn <- sqrt(x$n[x$u <= max.dist])
+          pts.cex <- cex.min + ((sqn - min(sqn)) * (cex.max - cex.min) / (max(sqn) - min(sqn)))
+        }
+        else pts.prop <- FALSE
+      }
+      else pts.prop <- FALSE 
+      u <- x$u[x$u <= max.dist]
+      v <- x$v
+      if(is.vector(v) | length(v) == length(x$u))
+        v <- matrix(v, ncol=1)
+      v <- v[x$u <= max.dist,, drop=FALSE]
+      if(vario.col == "all")
+        vario.col <- 1:dim(v)[2]
+      else
+        if(mode(vario.col) != "numeric" | any(vario.col > ncol(v)))
+          stop("argument vario.col must be equals to \"all\" or a vector indicating the column numbers to be plotted")
+      v <- v[, vario.col, drop=FALSE]
+      if (scaled) v <- t(t(v)/x$var.mark[vario.col])
+      if(is.null(list(...)$ylim)){ 
+        ymax <- max(v)
+        if (!is.null(envelope.obj)) 
+          ymax <- max(c(envelope.obj$v.upper, ymax))
+        fc.call$ylim <- c(0, ymax)
+      }
+      if(ncol(v) == 1){
+        fc.call[[1]] <- as.name("plot")
+        fc.call$x <- data.frame(distance=u, semivariance = as.vector(v))
+        if(pts.prop) fc.call$cex <- pts.cex
+        eval(fc.call, sys.frame(sys.parent()))
+      }
+      else{
+        fc.call[[1]] <- as.name("matplot")
+        fc.call$x <- u
+        fc.call$y <- v
+        if(is.null(Ldots$xlab)) fc.call$xlab <- "distance"
+        if(is.null(Ldots$ylab)) fc.call$ylab <- "semivariance"
+        if(is.null(Ldots$ty)){
+          if (x$output.type == "bin") fc.call$type <- "p"
+          if (x$output.type == "smooth") fc.call$type <- "l"
+          if (x$output.type == "cloud") fc.call$type <- "p"
+        }
+        #      if(is.null(Ldots$col)) fc.call$col <- 1:6
+        #      if(is.null(Ldots$lty)) fc.call$lty <- 1:5
+        #      if(is.null(Ldots$lwd)) $lwd <- 1
+        #      if(is.null(Ldots$pch)) Ldots$pch <- NULL
+        #      if(is.null(Ldots$cex)) Ldots$cex <- NULL
+        #      if(is.null(Ldots$add)) Ldots$add <- FALSE
+        #      
+        #      matplot(x=u, y= v, xlim = c(0, max.dist), ylim = Ldots$ylim, 
+        #              xlab = Ldots$xlab, ylab = Ldots$ylab, type = Ldots$type,
+        #              add = Ldots$add, pch = Ldots$pch,
+        #              lty = Ldots$lty, lwd = Ldots$lwd, col = Ldots$col)
+        eval(fc.call, sys.frame(sys.parent()))
+      }
+      if (var.lines) {
+        if (scaled) abline(h = 1, lty = 3)
+        else abline(h = x$var.mark, lty = 3)
+      }
+      if (!is.null(envelope.obj)) {
+        lines(u, envelope.obj$v.lower, lty = 4)
+        lines(u, envelope.obj$v.upper, lty = 4)
+      }
+    }
+    return(invisible())
+  }
+
+"lines.variomodel.variofit" <-
+#  "lines.variomodel.likGRF" <-
+  function (x, max.dist, scaled = FALSE, ...)
+  {
+    my.l <- list()
+    if(missing(max.dist)){
+      my.l$max.dist <- x$max.dist
+      if (is.null(my.l$max.dist)) 
+        stop("argument max.dist needed for this object")
+    }
+    else
+      my.l$max.dist <- max.dist
+    if (any(x$cov.model == c("matern","powered.exponential",
+                             "cauchy", "gencauchy", "gneiting.matern"))) 
+      my.l$kappa <- x$kappa
+    else kappa <- NULL
+    if (is.vector(x$cov.pars)) 
+      my.l$sill.total <- x$nugget + x$cov.pars[1]
+    else my.l$sill.total <- x$nugget + sum(x$cov.pars[, 1])
+    my.l$nugget <- x$nugget
+    my.l$cov.pars <- x$cov.pars
+    my.l$cov.model <- x$cov.model
+    if (scaled){
+      if(is.vector(x$cov.model))
+        my.l$cov.pars[1] <-  my.l$cov.pars[1]/my.l$sill.total
+      else my.l$cov.pars[,1] <-  my.l$cov.cov.pars[,1]/my.l$sill.total
+      my.l$sill.total <- 1
+    }
+    gamma.f <- function(x, my.l){
+      if(any(my.l$cov.model == c("linear", "power")))
+        return(my.l$nugget + my.l$cov.pars[1] * (x^my.l$cov.pars[2]))
+      else
+        return(my.l$sill.total -
+                 .cov.spatial(x, cov.model = my.l$cov.model,
+                             kappa = my.l$kappa,
+                             cov.pars = my.l$cov.pars))
+    }
+    curve(gamma.f(x,my.l=my.l), from=0, to=my.l$max.dist, add=TRUE, ...)
+    return(invisible())
+  }
+
